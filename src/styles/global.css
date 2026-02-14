@@ -1,0 +1,360 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+/* Global macOS-style cursor - applied to all elements */
+html,
+body,
+#root,
+*,
+*::before,
+*::after {
+    cursor: url('../assets/cursor.svg') 0 0, auto !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #f5f5f7;
+    --text-color: #1d1d1f;
+    --menu-bg: rgba(255, 255, 255, 0.4);
+    --menu-text: #000;
+    --window-bg: rgba(255, 255, 255, 0.8);
+    --window-header-bg: rgba(246, 246, 246, 0.9);
+    --dock-bg: rgba(255, 255, 255, 0.25);
+    --icon-filter: brightness(0);
+}
+
+.theme-dark {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --menu-bg: rgba(45, 45, 45, 0.6);
+    --menu-text: #fff;
+    --window-bg: rgba(30, 30, 30, 0.85);
+    --window-header-bg: rgba(45, 45, 45, 0.95);
+    --dock-bg: rgba(0, 0, 0, 0.4);
+    --icon-filter: invert(1);
+}
+
+body,
+html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    /* Match boot screen to avoid flash */
+}
+
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    /* Using local wallpaper as requested by user previously */
+    background-image: url('../assets/Wallpapers/macos-wall.jpg');
+    background-color: #2c3e50;
+    /* Fallback if image fails */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #fff;
+}
+
+/* Top Menu Bar - macOS Style */
+.menu-bar {
+    height: 28px;
+    background: var(--menu-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--menu-text);
+    z-index: 20000;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.menu-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.menu-item-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.apple-logo {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 8px;
+    filter: var(--icon-filter);
+}
+
+.menu-item {
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+}
+
+.menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.menu-item.bold {
+    font-weight: 700;
+}
+
+.menu-item.active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.menu-dropdown {
+    position: absolute;
+    top: 28px;
+    background: var(--window-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    min-width: 220px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 5px 0;
+    z-index: 20001;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    padding: 4px 20px;
+    font-size: 13px;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background: #007aff;
+    color: #fff;
+}
+
+.dropdown-divider {
+    height: 0.5px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 5px 12px;
+}
+
+.dropdown-shortcut {
+    opacity: 0.5;
+    font-size: 11px;
+}
+
+.dropdown-item:hover .dropdown-shortcut {
+    opacity: 1;
+}
+
+.menu-right {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.system-icon-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    /* Increased spacing to match reference */
+}
+
+.system-icon {
+    width: 18px;
+    height: 18px;
+    filter: var(--icon-filter);
+    opacity: 0.8;
+    object-fit: contain;
+}
+
+.notification-dot {
+    width: 5px;
+    height: 5px;
+    background: #6c5ce7;
+    /* Purple dot as seen in reference */
+    border-radius: 50%;
+    margin-left: -12px;
+    margin-top: -8px;
+}
+
+.menu-time {
+    font-size: 13px;
+    font-weight: 400;
+    /* Regular weight in reference */
+    white-space: pre;
+}
+
+/* Desktop Content Area */
+.desktop-content {
+    flex: 1;
+    position: relative;
+    padding: 0;
+    z-index: 5;
+    overflow: hidden;
+    /* Prevent scrolls outside windows */
+}
+
+.windows-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through to desktop if no window */
+}
+
+.windows-layer>* {
+    pointer-events: all;
+    /* Restore pointer events for windows */
+}
+
+/* Desktop Icons Grid */
+.desktop-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.mac-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 80px;
+}
+
+.mac-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.mac-icon span {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Bottom macOS Dock */
+.dock-container {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20000;
+}
+
+.dock {
+    height: 64px;
+    width: max-content;
+    background: var(--dock-bg);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border-radius: 20px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Increased spacing for macOS look */
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.dock-item {
+    width: 50px;
+    /* Slightly larger icons */
+    height: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.dock-item:hover {
+    transform: scale(1.4) translateY(-12px);
+}
+
+.dock-item img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* Tooltip */
+.dock-tooltip {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.dock-item:hover .dock-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Active Indicator Dot */
+.dock-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--text-color);
+    opacity: 0.5;
+    /* macOS indicator dot is dark or subtle */
+    border-radius: 50%;
+}
+
+/* Animations */
+.fade-in-desktop {
+    animation: fadeInDesktop 1s ease-out forwards;
+}
+
+@keyframes fadeInDesktop {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

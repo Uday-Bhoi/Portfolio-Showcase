@@ -1,0 +1,138 @@
+.music-widget {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    width: 260px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 18px;
+    padding: 14px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 10;
+    color: #fff;
+}
+
+.music-widget:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.widget-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.widget-cover {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.widget-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.widget-title {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.widget-artist {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.widget-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.widget-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.widget-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.widget-btn.mini .material-icons {
+    font-size: 18px;
+}
+
+.widget-btn.main .material-icons {
+    font-size: 24px;
+}
+
+.widget-empty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.widget-icon-large {
+    font-size: 32px !important;
+    opacity: 0.8;
+}
+
+.widget-footer {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.widget-progress-container {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.widget-progress-bar {
+    height: 100%;
+    background: #fa233b;
+}
+
+.widget-volume-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mini-vol-icon {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.widget-volume-slider {
+    flex: 1;
+    height: 3px;
+    accent-color: #fff;
+    cursor: pointer;
+}

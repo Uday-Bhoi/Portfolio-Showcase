@@ -1,0 +1,467 @@
+/* Portfolio V2 - Henry Heffernan Design Aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+.portfolio-v2-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f9fa;
+    background-image: url("https://www.transparenttextures.com/patterns/white-wall-2.png");
+    color: #333;
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden;
+    position: relative;
+    /* Flush with window fix */
+    margin-top: -1px;
+}
+
+/* Landing Page (Home) */
+.home-screen {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-content {
+    text-align: center;
+}
+
+.hero-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 82px;
+    font-weight: 700;
+    color: #3e4444;
+    margin-bottom: 8px;
+    letter-spacing: -2px;
+}
+
+.hero-role {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px;
+    opacity: 0.8;
+    color: #555;
+    margin-bottom: 60px;
+}
+
+.hero-nav {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.hero-nav button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6366f1;
+    cursor: default;
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 2px;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+.hero-nav button:hover {
+    opacity: 0.7;
+}
+
+/* App Layout with Sidebar */
+.app-layout {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.portfolio-sidebar {
+    width: 200px;
+    padding: 40px 30px;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.sidebar-header p {
+    font-size: 14px;
+    opacity: 0.6;
+    margin-bottom: 40px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.sidebar-nav button {
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6366f1;
+    cursor: default;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-nav button.active {
+    color: #333;
+}
+
+.active-dot {
+    margin-right: 4px;
+    font-size: 14px;
+}
+
+.sidebar-footer {
+    font-size: 10px;
+    opacity: 0.4;
+    padding-top: 20px;
+}
+
+/* Content Area */
+.app-main-content {
+    flex: 1;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 60px 80px;
+}
+
+.internal-content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-main-heading {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.section-intro-desc {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    margin-bottom: 24px;
+    color: #666;
+}
+
+.sub-greeting {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    margin-bottom: 32px;
+    color: #444;
+}
+
+.intro-text {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    color: #555;
+}
+
+/* Timeline Components */
+.story-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4px;
+}
+
+.timeline-header h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.timeline-header span {
+    font-size: 13px;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+.timeline-sub {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6366f1;
+    margin-bottom: 8px;
+}
+
+.timeline-meta {
+    padding-left: 20px;
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 8px;
+}
+
+.highlight-box {
+    background: rgba(99, 102, 241, 0.05);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.cert-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cert-list li {
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-meta {
+    font-size: 13px;
+    opacity: 0.5;
+}
+
+/* Project V2 Blocks */
+.project-block-v2 {
+    padding: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+
+.project-block-v2:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.block-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.block-header .material-icons {
+    font-size: 32px;
+    color: #6366f1;
+}
+
+.block-title h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.block-title p {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    opacity: 0.5;
+}
+
+.block-summary {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Skills Grid */
+.skills-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.skill-category h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 8px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tags span {
+    font-size: 13px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Contact Specific v2 */
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item .label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    opacity: 0.4;
+    margin-bottom: 4px;
+}
+
+.info-item p,
+.info-item a {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Common UI Elements */
+.resume-notice {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    margin: 32px 0;
+}
+
+.link-action {
+    background: none;
+    border: none;
+    color: #6366f1;
+    text-decoration: underline;
+    cursor: default;
+}
+
+.content-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 40px 0;
+}
+
+.section-sub-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.photo-placeholder {
+    width: 100%;
+    margin-top: 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.photo-placeholder img {
+    width: 100%;
+    display: block;
+}
+
+/* Contact Form */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.send-btn {
+    background: #8e8e93;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: default;
+}
+
+/* Animations */
+.animate-fade {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 800px) {
+    .hero-name {
+        font-size: 52px;
+    }
+
+    .hero-role {
+        font-size: 22px;
+    }
+
+    .app-main-content {
+        padding: 40px 20px;
+    }
+}

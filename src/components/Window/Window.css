@@ -1,0 +1,124 @@
+/* macOS Window Design */
+.window-container {
+    border-radius: 12px;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    background: var(--window-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px) !important;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    min-height: 300px;
+    transition: box-shadow 0.2s;
+}
+
+.window-container.active {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.window-container.maximized {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.window-header {
+    height: 40px !important;
+    background: var(--window-header-bg) !important;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+    cursor: default;
+}
+
+.active .window-header {
+    background: var(--window-header-bg) !important;
+}
+
+.window-controls {
+    position: absolute;
+    left: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.mac-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    position: relative;
+}
+
+.mac-btn .icon {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0);
+    transition: color 0.1s;
+    font-weight: 700;
+}
+
+.window-header:hover .mac-btn .icon {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.btn-close {
+    background: #ff5f57 !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-minimize {
+    background: #ffbd2e !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-maximize {
+    background: #28c840 !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.window-title {
+    color: var(--text-color) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    opacity: 0.8;
+    user-select: none;
+}
+
+.window-body {
+    flex: 1;
+    background: transparent !important;
+    border: none !important;
+    overflow: hidden;
+    /* App takes care of internal scrolling */
+    position: relative;
+}
+
+.window-resizer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize;
+    z-index: 100;
+}
+
+/* Specific handles for better UX if needed */
+.resizing {
+    user-select: none !important;
+}
+
+.resizing * {
+    pointer-events: none !important;
+}

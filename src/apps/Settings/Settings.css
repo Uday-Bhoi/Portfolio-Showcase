@@ -1,0 +1,427 @@
+.settings-app {
+    display: flex;
+    height: 100%;
+    background: var(--window-bg);
+    /* Use theme variable */
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Sidebar Styling */
+.settings-sidebar {
+    width: 240px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(30px);
+    border-right: 0.5px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+}
+
+.sidebar-search {
+    padding: 0 16px;
+    margin-bottom: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-search .material-icons {
+    position: absolute;
+    left: 22px;
+    font-size: 14px;
+    opacity: 0.4;
+}
+
+.sidebar-search input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 6px;
+    padding: 5px 5px 5px 26px;
+    font-size: 13px;
+    color: inherit;
+    outline: none;
+}
+
+.sidebar-user {
+    margin: 0 12px 16px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+    cursor: default;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: #8e8e93;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-avatar .material-icons {
+    color: #fff;
+    font-size: 20px;
+}
+
+.user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-subtitle {
+    font-size: 11px;
+    opacity: 0.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-user .chevron {
+    font-size: 16px;
+    opacity: 0.3;
+}
+
+.sidebar-groups {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 12px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    cursor: default;
+    transition: background 0.1s;
+}
+
+.sidebar-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item.active {
+    background: #007aff;
+    color: #fff;
+}
+
+.item-icon-wrap {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-icon-wrap .material-icons {
+    font-size: 15px;
+    color: #fff !important;
+}
+
+.sidebar-item.active .item-icon-wrap {
+    background: #fff !important;
+}
+
+.sidebar-item.active .item-icon-wrap .material-icons {
+    color: #007aff !important;
+}
+
+.sidebar-item .item-label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Content Area Styling */
+.settings-content {
+    flex: 1;
+    background: var(--bg-color);
+    overflow-y: auto;
+    padding: 24px 40px;
+}
+
+.settings-pane {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.pane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.pane-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Settings Group (Apple's Rounded Boxes) */
+.settings-group {
+    background: rgba(255, 255, 255, 0.6);
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.group-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-color);
+    /* Updated to use theme color with opacity */
+    opacity: 0.6;
+    margin-bottom: 8px;
+    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.group-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+    cursor: default;
+}
+
+.group-item:last-child {
+    border-bottom: none;
+}
+
+.group-item:not(.no-hover):hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.item-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-label span {
+    font-size: 14px;
+    color: var(--text-color);
+    /* Explicitly use theme variable */
+}
+
+.item-label .subtitle {
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.item-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-icon {
+    font-size: 18px;
+    color: #007aff;
+}
+
+/* Appearance Selector */
+.appearance-selector {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.appearance-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.appearance-preview {
+    width: 100px;
+    height: 65px;
+    border-radius: 6px;
+    border: 3px solid transparent;
+    transition: border-color 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.appearance-option:hover .appearance-preview {
+    border-color: rgba(0, 122, 255, 0.3);
+}
+
+.appearance-option.active .appearance-preview {
+    border-color: #007aff;
+}
+
+.appearance-preview.light {
+    background: #f5f5f7;
+}
+
+.appearance-preview.dark {
+    background: #1d1d1f;
+}
+
+.appearance-preview.custom {
+    background: linear-gradient(135deg, #007aff, #5856d6);
+}
+
+.appearance-option span {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Accent Color Dots */
+.accent-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.accent-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* macOS Interactive Elements */
+.macos-select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 13px;
+    outline: none;
+    color: inherit;
+}
+
+.macos-switch {
+    width: 36px;
+    height: 20px;
+    background: #34c759;
+    border-radius: 20px;
+    position: relative;
+}
+
+.macos-switch::after {
+    content: '';
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* About Section */
+.settings-pane.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.about-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 16px;
+}
+
+.about-version {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-bottom: 24px;
+}
+
+.about-specs {
+    width: 100%;
+    max-width: 400px;
+}
+
+.about-specs .group-item {
+    justify-content: space-between;
+}
+
+.spec-label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.spec-value {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.macos-btn {
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 20px;
+    color: inherit;
+}
+
+/* Dark Mode Overrides */
+.theme-dark .settings-app {
+    color: #ffffff;
+}
+
+.theme-dark .settings-sidebar {
+    background: rgba(45, 45, 45, 0.5);
+    border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .sidebar-search input {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .sidebar-user {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .settings-group {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .group-item {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .macos-select,
+.theme-dark .macos-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+}

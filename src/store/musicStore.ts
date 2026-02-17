@@ -3,7 +3,7 @@ import type { MusicState, LoopMode } from '../types/music';
 
 // 1. Import your files at the top
 import mySong from '../assets/music/The Weeknd - Is There Someone Else.mp3';
-//import songCover from '../assets/music/cover.jpg'; // Optional
+import songCover from '../assets/music/dawn_fm_album_cover.jpg'; // Optional
 
 export const useMusicStore = create<MusicState>((set, get) => ({
     tracks: [
@@ -12,6 +12,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
             title: 'Is there Someone Else',
             artist: 'The Weeknd',
             src: mySong,
+            cover: songCover,
         }
     ],
     currentTrackId: null,

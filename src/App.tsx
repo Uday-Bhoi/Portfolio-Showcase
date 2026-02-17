@@ -203,6 +203,8 @@ const App: React.FC = () => {
     return () => window.removeEventListener('click', handleClickOutside);
   }, [activeMenu]);
 
+  const isAnyWindowMaximized = useMemo(() => windows.some(win => win.isMaximized && !win.isMinimized), [windows]);
+
   if (isBooting) {
     return <BootScreen onBootComplete={() => {
       setIsBooting(false);
@@ -354,10 +356,10 @@ const App: React.FC = () => {
       <AudioEngine />
 
       {/* 3. Bottom macOS Dock */}
-      <section className="dock-container">
+      <section className={`dock-container ${isAnyWindowMaximized ? 'full-screen' : ''}`}>
         <div className="dock">
           {apps.map(app => {
-            const isOpen = windows.some(win => win.type === app.type && !win.isMinimized);
+            const isOpen = windows.some(win => win.type === app.type);
             return (
               <div
                 key={app.type}

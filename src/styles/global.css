@@ -262,10 +262,14 @@ html {
 /* Bottom macOS Dock */
 .dock-container {
     position: absolute;
-    bottom: 12px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 20000;
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .dock {
@@ -279,9 +283,37 @@ html {
     display: flex;
     align-items: center;
     gap: 12px;
-    /* Increased spacing for macOS look */
     border: 0.5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+}
+
+/* Full-screen auto-hide logic */
+.dock-container.full-screen .dock {
+    transform: translateY(100px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Invisible hit area to trigger the dock when cursor is at bottom */
+.dock-container.full-screen::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    /* Specific hit area width */
+    height: 15px;
+    /* Taller hit area to follow the bottom edge */
+    background: transparent;
+    pointer-events: all;
+}
+
+.dock-container.full-screen:hover .dock {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
 }
 
 .dock-item {

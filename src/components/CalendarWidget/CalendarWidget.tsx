@@ -50,8 +50,8 @@ const CalendarWidget: React.FC = () => {
                 <span className="calendar-year">{year}</span>
             </div>
             <div className="calendar-weekdays">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => (
-                    <div key={d} className="weekday">{d}</div>
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                    <div key={`${d}-${i}`} className="weekday">{d}</div>
                 ))}
             </div>
             <div className="calendar-grid">

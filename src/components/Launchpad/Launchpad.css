@@ -95,6 +95,25 @@
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 768px) {
+    .launchpad-overlay {
+        padding-top: 40px;
+    }
+
+    .launchpad-content {
+        padding: 0 20px;
+    }
+
+    .launchpad-search {
+        margin-bottom: 30px;
+    }
+
+    .launchpad-item img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
 /* Dark mode adjustments if needed */
 .theme-dark .launchpad-overlay {
     background: rgba(0, 0, 0, 0.4);

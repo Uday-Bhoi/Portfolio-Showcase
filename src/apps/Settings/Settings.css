@@ -389,6 +389,36 @@
     color: inherit;
 }
 
+/* Responsive Settings App */
+@media (max-width: 768px) {
+    .settings-sidebar {
+        display: none;
+        /* Hide sidebar on mobile to focus on content */
+    }
+
+    .settings-content {
+        padding: 20px;
+    }
+
+    .settings-pane {
+        max-width: 100%;
+    }
+
+    .appearance-selector {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .appearance-preview {
+        width: 80px;
+        height: 52px;
+    }
+
+    .about-specs {
+        max-width: 100%;
+    }
+}
+
 /* Dark Mode Overrides */
 .theme-dark .settings-app {
     color: #ffffff;

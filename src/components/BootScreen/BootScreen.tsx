@@ -4,11 +4,22 @@ import { Icons } from '../../assets/icons';
 
 interface BootScreenProps {
     onBootComplete: () => void;
+    preloadImage?: string;
 }
 
-const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete }) => {
+const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete, preloadImage }) => {
     const [progress, setProgress] = useState(0);
     const [isFadingOut, setIsFadingOut] = useState(false);
+    const [isImageLoaded, setIsImageLoaded] = useState(!preloadImage);
+
+    useEffect(() => {
+        if (preloadImage) {
+            const img = new Image();
+            img.src = preloadImage;
+            img.onload = () => setIsImageLoaded(true);
+            img.onerror = () => setIsImageLoaded(true); // Continue anyway if load fails
+        }
+    }, [preloadImage]);
 
     useEffect(() => {
         const duration = 3000; // 3 seconds
@@ -18,12 +29,16 @@ const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete }) => {
         const timer = setInterval(() => {
             setProgress((prev) => {
                 if (prev >= 100) {
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        setIsFadingOut(true);
-                        setTimeout(onBootComplete, 800);
-                    }, 500);
-                    return 100;
+                    // Only finish if image is also loaded
+                    if (isImageLoaded) {
+                        clearInterval(timer);
+                        setTimeout(() => {
+                            setIsFadingOut(true);
+                            setTimeout(onBootComplete, 800);
+                        }, 500);
+                        return 100;
+                    }
+                    return 99; // Hold at 99 until image loads
                 }
                 return Math.min(prev + step, 100);
             });

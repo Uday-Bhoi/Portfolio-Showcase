@@ -206,13 +206,16 @@ const App: React.FC = () => {
   const isAnyWindowMaximized = useMemo(() => windows.some(win => win.isMaximized && !win.isMinimized), [windows]);
 
   if (isBooting) {
-    return <BootScreen onBootComplete={() => {
-      setIsBooting(false);
-      // Automatically open portfolio on startup
-      setTimeout(() => {
-        openWindow('portfolio', 'meetuday.exe');
-      }, 500);
-    }} />;
+    return <BootScreen
+      preloadImage={macosWallpaper}
+      onBootComplete={() => {
+        setIsBooting(false);
+        // Automatically open portfolio on startup
+        setTimeout(() => {
+          openWindow('portfolio', 'meetuday.exe');
+        }, 500);
+      }}
+    />;
   }
 
   return (

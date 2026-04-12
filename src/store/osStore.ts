@@ -7,6 +7,7 @@ interface WindowState {
     activeApp: string; // The app currently in the menu bar
     isLaunchpadOpen: boolean;
     theme: 'light' | 'dark' | 'custom';
+    wallpaper: 'standard' | 'light-pillar' | 'floating-lines';
 
     // Actions
     openWindow: (type: AppType, title: string) => void;
@@ -19,6 +20,7 @@ interface WindowState {
     setActiveApp: (label: string) => void;
     toggleLaunchpad: (isOpen?: boolean) => void;
     setTheme: (theme: 'light' | 'dark' | 'custom') => void;
+    setWallpaper: (wallpaper: 'standard' | 'light-pillar' | 'floating-lines') => void;
 }
 
 export const useOSStore = create<WindowState>((set) => ({
@@ -27,6 +29,7 @@ export const useOSStore = create<WindowState>((set) => ({
     activeApp: 'Finder',
     isLaunchpadOpen: false,
     theme: 'light',
+    wallpaper: 'standard',
 
     openWindow: (type, title) => set((state) => {
         // If Launchpad is open, close it when opening an app
@@ -150,4 +153,5 @@ export const useOSStore = create<WindowState>((set) => ({
         isLaunchpadOpen: isOpen !== undefined ? isOpen : !state.isLaunchpadOpen
     })),
     setTheme: (theme) => set({ theme }),
+    setWallpaper: (wallpaper) => set({ wallpaper }),
 }));

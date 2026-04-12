@@ -22,7 +22,9 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     duration: 0,
     isShuffle: true, // Shuffle by default as requested
     loopMode: 'all',
+    error: null,
 
+    setError: (error) => set({ error }),
     setTracks: (tracks) => set({ tracks }),
 
     playTrack: (trackId) => set({
@@ -81,5 +83,34 @@ export const useMusicStore = create<MusicState>((set, get) => ({
 
     toggleShuffle: () => set((state) => ({ isShuffle: !state.isShuffle })),
 
-    setLoopMode: (mode: LoopMode) => set({ loopMode: mode })
+    setLoopMode: (mode: LoopMode) => set({ loopMode: mode }),
+
+    fetchSpotifyTracks: async (query: string) => {
+        const { setError } = get();
+        try {
+            setError(null);
+            const { spotifyService } = await import('../services/spotifyService');
+            const spotifyTracks = await spotifyService.searchTracks(query);
+
+            const tracks = spotifyTracks
+                .filter(t => t.preview_url) // Only keep tracks with previews for the <audio> element
+                .map(t => ({
+                    id: t.id,
+                    title: t.name,
+                    artist: t.artists[0].name,
+                    src: t.preview_url!,
+                    cover: t.album.images[0]?.url
+                }));
+
+            if (tracks.length > 0) {
+                set({ tracks });
+            } else {
+                setError('No tracks found with previews on Spotify.');
+            }
+        } catch (error) {
+            const err = error as Error;
+            console.error('Spotify fetch error:', err);
+            setError(err.message || 'Failed to fetch tracks from Spotify.');
+        }
+    }
 }));

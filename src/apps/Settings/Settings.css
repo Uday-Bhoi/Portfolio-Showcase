@@ -391,13 +391,41 @@
 
 /* Responsive Settings App */
 @media (max-width: 768px) {
+    .settings-app {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
     .settings-sidebar {
-        display: none;
-        /* Hide sidebar on mobile to focus on content */
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 20px;
+    }
+
+    .theme-dark .settings-sidebar {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-groups {
+        display: flex;
+        overflow-x: auto;
+        padding: 5px 12px;
+        gap: 8px;
+    }
+
+    .sidebar-item {
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .sidebar-item .item-label {
+        display: none; /* Hide labels in mini-sidebar if icon is clear */
     }
 
     .settings-content {
-        padding: 20px;
+        padding: 20px 15px;
     }
 
     .settings-pane {
@@ -405,13 +433,15 @@
     }
 
     .appearance-selector {
-        flex-wrap: wrap;
-        gap: 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 15px;
     }
 
     .appearance-preview {
-        width: 80px;
-        height: 52px;
+        width: 85px;
+        height: 55px;
     }
 
     .about-specs {
@@ -454,4 +484,170 @@
 .theme-dark .macos-btn {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Wallpaper Section */
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.wallpaper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.wallpaper-preview {
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+}
+
+.wallpaper-item:hover .wallpaper-preview {
+    border-color: rgba(0, 122, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.wallpaper-preview.active {
+    border-color: #007aff;
+}
+
+.wallpaper-preview.standard {
+    background: url('../../assets/Wallpapers/macos-wall.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.wallpaper-preview.pillar {
+    background: linear-gradient(135deg, #5227FF, #FF9FFC);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pillar-mini-preview {
+    width: 20%;
+    height: 120%;
+    background: rgba(255, 255, 255, 0.3);
+    filter: blur(10px);
+    transform: rotate(25deg);
+    animation: pillarMove 3s infinite alternate ease-in-out;
+}
+
+@keyframes pillarMove {
+    from { transform: rotate(25deg) translateX(-20px); }
+    to { transform: rotate(25deg) translateX(20px); }
+}
+
+.wallpaper-item span {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.theme-dark .wallpaper-preview.pillar {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.wallpaper-preview.lines {
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.lines-mini-preview {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #2980b9, #8e44ad, transparent);
+    animation: lineMove 3s infinite linear;
+}
+
+@keyframes lineMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Wallpaper Section */
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.wallpaper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.wallpaper-preview {
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+}
+
+.wallpaper-item:hover .wallpaper-preview {
+    border-color: rgba(0, 122, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.wallpaper-preview.active {
+    border-color: #007aff;
+}
+
+.wallpaper-preview.standard {
+    background: url('../../assets/Wallpapers/macos-wall.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.wallpaper-preview.pillar {
+    background: linear-gradient(135deg, #5227FF, #FF9FFC);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pillar-mini-preview {
+    width: 20%;
+    height: 120%;
+    background: rgba(255, 255, 255, 0.3);
+    filter: blur(10px);
+    transform: rotate(25deg);
+    animation: pillarMove 3s infinite alternate ease-in-out;
+}
+
+@keyframes pillarMove {
+    from { transform: rotate(25deg) translateX(-20px); }
+    to { transform: rotate(25deg) translateX(20px); }
+}
+
+.wallpaper-item span {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.theme-dark .wallpaper-preview.pillar {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
 }

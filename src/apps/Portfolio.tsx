@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Portfolio.css';
+import udayPhoto from '../assets/documents/uday-removebg.png';
+import udayResume from '../assets/documents/Uday ATS CV.pdf';
+
 
 const Portfolio: React.FC = () => {
     const [activeSection, setActiveSection] = useState('home');
+    const scrollContainerRef = useRef<HTMLElement>(null);
+
+    // Fix: Scroll to top whenever tab changes
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = 0;
+        }
+    }, [activeSection]);
 
     const renderSidebar = () => (
         <aside className="portfolio-sidebar">
@@ -94,7 +105,7 @@ const Portfolio: React.FC = () => {
                     <div className="notice-text">
                         <strong>Looking for my Resume ?</strong>
                         <p style={{ fontSize: '13px', opacity: 0.7 }}>
-                            <a href="/Uday_Bhoi_Resume.pdf" download="Uday_Bhoi_Resume.pdf" style={{ color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>
+                            <a href={udayResume} download="Uday ATS CV.pdf" style={{ color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>
                                 Click here to download it !
                             </a>
                         </p>
@@ -112,8 +123,8 @@ const Portfolio: React.FC = () => {
                         I completed my higher secondary education (11th and 12th) in the PCM stream from D.Y. Patil College, where my analytical foundation became stronger. Later, I pursued my Bachelor of Science in Information Technology from Pillai College, consistently maintaining a 9+ CGPA throughout every semester, reflecting my academic dedication and discipline.
                     </p>
 
-                    <div className="photo-placeholder" style={{ marginBottom: '32px' }}>
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Technology and Workscape" />
+                    <div className="photo-placeholder uday-portrait" style={{ marginBottom: '32px' }}>
+                        <img src={udayPhoto} alt="Uday Bhoi" />
                     </div>
 
                     <p className="intro-text">
@@ -234,57 +245,77 @@ const Portfolio: React.FC = () => {
                 <h1 className="page-main-heading">Arsenal</h1>
                 <p className="section-intro-desc">& Projects</p>
 
-                <div className="project-blocks">
-                    <div className="project-block-v2">
-                        <div className="block-header">
-                            <span className="material-icons">sports_soccer</span>
-                            <div className="block-title">
+                <div className="project-grid-v3">
+                    <div className="project-card-v3">
+                        <div className="card-accent"></div>
+                        <div className="card-body">
+                            <div className="card-icon">
+                                <span className="material-icons">sports_soccer</span>
+                            </div>
+                            <div className="card-header">
                                 <h3>FIFA 2026 Qualification Analysis</h3>
-                                <p>Data Analytics • Python • Matplotlib</p>
+                                <div className="project-tags">
+                                    <span>Python</span>
+                                    <span>Analysis</span>
+                                    <span>Matplotlib</span>
+                                </div>
                             </div>
+                            <p>A comprehensive study evaluating India's World Cup chances. Involved extensive data cleaning, EDA, and tactical efficiency visualization using ISL and FIFA rankings.</p>
                         </div>
-                        <p className="block-summary">
-                            A comprehensive study evaluating India's World Cup chances. Involved extensive data cleaning, EDA, and tactical efficiency visualization using ISL and FIFA rankings.
-                        </p>
                     </div>
 
-                    <div className="project-block-v2">
-                        <div className="block-header">
-                            <span className="material-icons">security</span>
-                            <div className="block-title">
+                    <div className="project-card-v3">
+                        <div className="card-accent" style={{ background: '#7d5fff' }}></div>
+                        <div className="card-body">
+                            <div className="card-icon">
+                                <span className="material-icons">security</span>
+                            </div>
+                            <div className="card-header">
                                 <h3>Virtual Art Gallery</h3>
-                                <p>Full-Stack • JSP • Cryptography</p>
+                                <div className="project-tags">
+                                    <span>Full-Stack</span>
+                                    <span>JSP</span>
+                                    <span>Security</span>
+                                </div>
                             </div>
+                            <p>Secure web platform featuring SHA-256 hashing, AES encryption, and RSA for transactions. Built with JSP, Bootstrap, and JDBC.</p>
                         </div>
-                        <p className="block-summary">
-                            Secure web platform featuring SHA-256 hashing, AES encryption, and RSA for transactions. Built with JSP, Bootstrap, and JDBC.
-                        </p>
                     </div>
 
-                    <div className="project-block-v2">
-                        <div className="block-header">
-                            <span className="material-icons">settings_remote</span>
-                            <div className="block-title">
+                    <div className="project-card-v3">
+                        <div className="card-accent" style={{ background: '#32ff7e' }}></div>
+                        <div className="card-body">
+                            <div className="card-icon">
+                                <span className="material-icons">settings_remote</span>
+                            </div>
+                            <div className="card-header">
                                 <h3>NFS Automation System</h3>
-                                <p>Linux Admin • Shell Scripting • RHEL</p>
+                                <div className="project-tags">
+                                    <span>Linux</span>
+                                    <span>Shell</span>
+                                    <span>RHEL</span>
+                                </div>
                             </div>
+                            <p>Automated Network File Sharing configuration on Linux. Reduced configuration errors and enhanced network productivity through shell-based logic.</p>
                         </div>
-                        <p className="block-summary">
-                            Automated Network File Sharing configuration on Linux. Reduced configuration errors and enhanced network productivity through shell-based logic.
-                        </p>
                     </div>
 
-                    <div className="project-block-v2">
-                        <div className="block-header">
-                            <span className="material-icons">receipt_long</span>
-                            <div className="block-title">
-                                <h3>Supermarket Invoice System</h3>
-                                <p>Structured Programming • C</p>
+                    <div className="project-card-v3">
+                        <div className="card-accent" style={{ background: '#ffaf40' }}></div>
+                        <div className="card-body">
+                            <div className="card-icon">
+                                <span className="material-icons">receipt_long</span>
                             </div>
+                            <div className="card-header">
+                                <h3>Supermarket Invoice System</h3>
+                                <div className="project-tags">
+                                    <span>C Language</span>
+                                    <span>CLI</span>
+                                    <span>Systems</span>
+                                </div>
+                            </div>
+                            <p>CLI-based billing system with user authentication, product handling, and dynamic discount logic.</p>
                         </div>
-                        <p className="block-summary">
-                            CLI-based billing system with user authentication, product handling, and dynamic discount logic.
-                        </p>
                     </div>
                 </div>
             </section>
@@ -384,7 +415,7 @@ const Portfolio: React.FC = () => {
             {activeSection === 'home' ? renderHome() : (
                 <div className="app-layout">
                     {renderSidebar()}
-                    <main className="app-main-content">
+                    <main className="app-main-content" ref={scrollContainerRef}>
                         {activeSection === 'about' && renderAbout()}
                         {activeSection === 'experience' && renderExperience()}
                         {activeSection === 'projects' && renderProjects()}

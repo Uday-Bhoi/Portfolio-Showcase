@@ -12,7 +12,7 @@ interface SectionItem {
 }
 
 const Settings: React.FC = () => {
-    const { theme, setTheme } = useOSStore();
+    const { theme, setTheme, wallpaper, setWallpaper } = useOSStore();
     const [activeSection, setActiveSection] = useState<SettingsSection>('appearance');
 
     const sections: SectionItem[] = [
@@ -111,6 +111,45 @@ const Settings: React.FC = () => {
                                 </div>
                                 <div className="item-action">
                                     <span className="material-icons info-icon">info</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'wallpaper':
+                return (
+                    <div className="settings-pane">
+                        <header className="pane-header">
+                            <h2>Wallpaper</h2>
+                        </header>
+
+                        <div className="wallpaper-grid">
+                            <div className="wallpaper-item" onClick={() => setWallpaper('standard')}>
+                                <div className={`wallpaper-preview standard ${wallpaper === 'standard' ? 'active' : ''}`}></div>
+                                <span>Sonoma (Static)</span>
+                            </div>
+                            <div className="wallpaper-item" onClick={() => setWallpaper('light-pillar')}>
+                                <div className={`wallpaper-preview pillar ${wallpaper === 'light-pillar' ? 'active' : ''}`}>
+                                    <div className="pillar-mini-preview"></div>
+                                </div>
+                                <span>Light Pillar (Animated)</span>
+                            </div>
+                            <div className="wallpaper-item" onClick={() => setWallpaper('floating-lines')}>
+                                <div className={`wallpaper-preview lines ${wallpaper === 'floating-lines' ? 'active' : ''}`}>
+                                    <div className="lines-mini-preview"></div>
+                                </div>
+                                <span>Floating Lines (Animated)</span>
+                            </div>
+                        </div>
+
+                        <div className="settings-group" style={{ marginTop: '20px' }}>
+                            <div className="group-title">Dynamic Desktop</div>
+                            <div className="group-item">
+                                <div className="item-label">
+                                    <span>Show on all spaces</span>
+                                </div>
+                                <div className="item-action">
+                                    <div className="macos-switch on"></div>
                                 </div>
                             </div>
                         </div>

@@ -9,7 +9,21 @@ export type AppType =
     | 'settings'    // System Settings
     | 'terminal'    // Terminal Emulator
     | 'music'       // Apple Music
-    | 'launchpad';  // Application Launcher
+    | 'resume'      // Resume Viewer
+    | 'launchpad'   // Application Launcher
+    | 'messages'
+    | 'photos'
+    | 'facetime'
+    | 'calendar'
+    | 'notes'
+    | 'numbers'
+    | 'pages'
+    | 'appstore'
+    | 'videos'
+    | 'mail'
+    | 'contacts'
+    | 'reminders'
+    | 'maps';
 
 export interface WindowInstance {
     id: string;

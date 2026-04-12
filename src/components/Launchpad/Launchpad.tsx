@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useOSStore } from '../../store/osStore';
 import { Icons } from '../../assets/icons';
-import { AppType } from '../../types/os';
+import type { AppType } from '../../types/os';
 import './Launchpad.css';
 
 const Launchpad: React.FC = () => {

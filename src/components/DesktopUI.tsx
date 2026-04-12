@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Icons } from '../assets/icons';
 import { useOSStore } from '../store/osStore';
-import { AppType } from '../types/os';
+import type { AppType } from '../types/os';
 import Window from './Window/Window';
 import Launchpad from './Launchpad/Launchpad';
 

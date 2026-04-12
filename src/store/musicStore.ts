@@ -98,7 +98,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
                     id: t.id,
                     title: t.name,
                     artist: t.artists[0].name,
-                    src: t.preview_url,
+                    src: t.preview_url!,
                     cover: t.album.images[0]?.url
                 }));
 

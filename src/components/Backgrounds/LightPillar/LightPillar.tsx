@@ -18,6 +18,11 @@ interface LightPillarProps {
   quality?: 'low' | 'medium' | 'high';
 }
 
+const parseColorHelper = (hex: string) => {
+  const color = new THREE.Color(hex);
+  return new THREE.Vector3(color.r, color.g, color.b);
+};
+
 const LightPillar: React.FC<LightPillarProps> = ({
   topColor = '#5227FF',
   bottomColor = '#FF9FFC',
@@ -41,7 +46,6 @@ const LightPillar: React.FC<LightPillarProps> = ({
   const cameraRef = useRef<THREE.OrthographicCamera | null>(null);
   const geometryRef = useRef<THREE.PlaneGeometry | null>(null);
   const mouseRef = useRef(new THREE.Vector2(0, 0));
-  const timeRef = useRef(0);
   const rotationSpeedRef = useRef(rotationSpeed);
   const [webGLSupported, setWebGLSupported] = useState(true);
 
@@ -88,31 +92,20 @@ const LightPillar: React.FC<LightPillarProps> = ({
     // @ts-ignore
     const settings = qualitySettings[effectiveQuality] || qualitySettings.medium;
 
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({
-        antialias: false,
-        alpha: true,
-        powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
-        // @ts-ignore
-        precision: settings.precision,
-        stencil: false,
-        depth: false
-      });
-    } catch (error) {
-      setWebGLSupported(false);
-      return;
-    }
+    const renderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
+      // @ts-ignore
+      precision: settings.precision,
+      stencil: false,
+      depth: false
+    });
 
     renderer.setSize(width, height);
     renderer.setPixelRatio(settings.pixelRatio);
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
-
-    const parseColor = (hex: string) => {
-      const color = new THREE.Color(hex);
-      return new THREE.Vector3(color.r, color.g, color.b);
-    };
 
     const vertexShader = `
       varying vec2 vUv;
@@ -216,8 +209,8 @@ const LightPillar: React.FC<LightPillarProps> = ({
         uTime: { value: 0 },
         uResolution: { value: new THREE.Vector2(width, height) },
         uMouse: { value: mouseRef.current },
-        uTopColor: { value: parseColor(topColor) },
-        uBottomColor: { value: parseColor(bottomColor) },
+        uTopColor: { value: parseColorHelper(topColor) },
+        uBottomColor: { value: parseColorHelper(bottomColor) },
         uIntensity: { value: intensity },
         uInteractive: { value: interactive },
         uGlowAmount: { value: glowAmount },
@@ -259,10 +252,10 @@ const LightPillar: React.FC<LightPillarProps> = ({
       container.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
 
-    const animate = (currentTime: number) => {
+    const animate = (performTime: number) => {
       if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
 
-      const t = currentTime * 0.001 * rotationSpeedRef.current;
+      const t = performTime * 0.001 * rotationSpeedRef.current;
       materialRef.current.uniforms.uTime.value = t;
       materialRef.current.uniforms.uRotCos.value = Math.cos(t * 0.3);
       materialRef.current.uniforms.uRotSin.value = Math.sin(t * 0.3);
@@ -314,7 +307,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
       geometryRef.current = null;
       rafRef.current = null;
     };
-  }, [webGLSupported, quality]);
+  }, [webGLSupported, quality, bottomColor, glowAmount, intensity, interactive, noiseIntensity, pillarHeight, pillarRotation, pillarWidth, topColor]);
 
   useEffect(() => {
     rotationSpeedRef.current = rotationSpeed;
@@ -322,20 +315,12 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
   useEffect(() => {
     if (!materialRef.current) return;
-    const parseColor = (hex: string) => {
-      const color = new THREE.Color(hex);
-      return new THREE.Vector3(color.r, color.g, color.b);
-    };
-    materialRef.current.uniforms.uTopColor.value = parseColor(topColor);
+    materialRef.current.uniforms.uTopColor.value = parseColorHelper(topColor);
   }, [topColor]);
 
   useEffect(() => {
     if (!materialRef.current) return;
-    const parseColor = (hex: string) => {
-      const color = new THREE.Color(hex);
-      return new THREE.Vector3(color.r, color.g, color.b);
-    };
-    materialRef.current.uniforms.uBottomColor.value = parseColor(bottomColor);
+    materialRef.current.uniforms.uBottomColor.value = parseColorHelper(bottomColor);
   }, [bottomColor]);
 
   useEffect(() => {

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useOSStore } from '../store/osStore';
+import React, { useState } from 'react';
 import MobileLoader from './Mobile/MobileLoader';
 import MobileLockScreen from './Mobile/MobileLockScreen';
 import MobileHome from './Mobile/MobileHome';

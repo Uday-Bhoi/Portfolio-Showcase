@@ -28,7 +28,7 @@ const AudioEngine: React.FC = () => {
             const index = isShuffle ? Math.floor(Math.random() * tracks.length) : 0;
             playTrack(tracks[index].id);
         }
-    }, []);
+    }, [currentTrackId, isShuffle, playTrack, tracks]);
 
     // Initial autoplay setup: Listen for first interaction
     useEffect(() => {
@@ -88,7 +88,7 @@ const AudioEngine: React.FC = () => {
                 audioRef.current.play().catch(() => togglePlay(false));
             }
         }
-    }, [currentTrackId]);
+    }, [currentTrackId, currentTrack, isPlaying, hasInteracted, togglePlay]);
 
     // Update progress state
     const onTimeUpdate = () => {

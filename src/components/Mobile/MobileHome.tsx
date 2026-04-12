@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Icons } from '../../assets/icons';
-import { useOSStore } from '../../store/osStore';
 import MobileMusicWidget from './MobileMusicWidget';
 import './MobileHome.css';
 
@@ -12,7 +11,6 @@ import Settings from '../../apps/Settings/Settings';
 import Resume from '../../apps/Resume';
 
 const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
-  const { theme, openWindow } = useOSStore();
   const [time, setTime] = useState(new Date());
   const [activeApp, setActiveApp] = useState<string | null>(null);
 

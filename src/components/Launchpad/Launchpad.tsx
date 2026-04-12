@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useOSStore } from '../../store/osStore';
 import { Icons } from '../../assets/icons';
+import { AppType } from '../../types/os';
 import './Launchpad.css';
 
 const Launchpad: React.FC = () => {
@@ -8,7 +9,7 @@ const Launchpad: React.FC = () => {
     const [searchText, setSearchText] = useState('');
 
     // All icons now use local PNG files from assets/mac-icons/
-    const apps = [
+    const apps: { type: AppType, name: string, icon: string }[] = [
         { type: 'finder', name: 'Finder', icon: Icons.finder },
         { type: 'safari', name: 'Safari', icon: Icons.safari },
         { type: 'messages', name: 'Messages', icon: Icons.messages },
@@ -68,7 +69,7 @@ const Launchpad: React.FC = () => {
                                     alert(`${app.name} is a demo app. Content coming soon!`);
                                 } else {
                                     const title = app.type === 'settings' ? 'System Settings' : app.name;
-                                    openWindow(app.type as any, title);
+                                    openWindow(app.type, title);
                                 }
                                 toggleLaunchpad(false);
                             }}

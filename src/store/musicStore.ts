@@ -92,7 +92,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
             const { spotifyService } = await import('../services/spotifyService');
             const spotifyTracks = await spotifyService.searchTracks(query);
 
-            const tracks: any[] = spotifyTracks
+            const tracks = spotifyTracks
                 .filter(t => t.preview_url) // Only keep tracks with previews for the <audio> element
                 .map(t => ({
                     id: t.id,
@@ -107,9 +107,10 @@ export const useMusicStore = create<MusicState>((set, get) => ({
             } else {
                 setError('No tracks found with previews on Spotify.');
             }
-        } catch (error: any) {
-            console.error('Spotify fetch error:', error);
-            setError(error.message || 'Failed to fetch tracks from Spotify.');
+        } catch (error) {
+            const err = error as Error;
+            console.error('Spotify fetch error:', err);
+            setError(err.message || 'Failed to fetch tracks from Spotify.');
         }
     }
 }));

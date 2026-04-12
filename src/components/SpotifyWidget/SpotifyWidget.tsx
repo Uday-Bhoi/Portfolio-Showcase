@@ -1,5 +1,4 @@
 import React from 'react';
-import { useOSStore } from '../../store/osStore';
 import './SpotifyWidget.css';
 
 const SpotifyWidget: React.FC = () => {

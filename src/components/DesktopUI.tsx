@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Icons } from '../assets/icons';
 import { useOSStore } from '../store/osStore';
+import { AppType } from '../types/os';
 import Window from './Window/Window';
 import Launchpad from './Launchpad/Launchpad';
 
@@ -11,7 +12,6 @@ import Portfolio from '../apps/Portfolio';
 import Music from '../apps/Music/Music';
 import Settings from '../apps/Settings/Settings';
 import Resume from '../apps/Resume';
-import AudioEngine from '../core/AudioEngine';
 import MusicWidget from './MusicWidget/MusicWidget';
 import SpotifyWidget from './SpotifyWidget/SpotifyWidget';
 import NowPlaying from './NowPlaying/NowPlaying';
@@ -365,7 +365,7 @@ const DesktopUI: React.FC = () => {
                   if (app.type === 'launchpad') {
                     toggleLaunchpad();
                   } else {
-                    openWindow(app.type as any, app.name);
+                    openWindow(app.type as AppType, app.name);
                   }
                 }}
               >

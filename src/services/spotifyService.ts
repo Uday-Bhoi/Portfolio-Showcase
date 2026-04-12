@@ -43,7 +43,7 @@ class SpotifyService {
             try {
                 const errorJson = JSON.parse(errorText);
                 throw new Error(errorJson.error_description || errorJson.error || `Token error: ${response.status}`);
-            } catch (e) {
+            } catch {
                 throw new Error(errorText || `Token error: ${response.status} ${response.statusText}`);
             }
         }
@@ -70,7 +70,7 @@ class SpotifyService {
             try {
                 const errorJson = JSON.parse(errorText);
                 throw new Error(errorJson.error?.message || `Spotify search error: ${response.status}`);
-            } catch (e) {
+            } catch {
                 throw new Error(errorText || `Spotify search error: ${response.status} ${response.statusText}`);
             }
         }
@@ -88,7 +88,7 @@ class SpotifyService {
         });
 
         const data = await response.json();
-        return data.items.map((item: any) => item.track);
+        return data.items.map((item: { track: SpotifyTrack }) => item.track);
     }
 }
 

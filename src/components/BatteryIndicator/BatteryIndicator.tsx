@@ -6,8 +6,8 @@ interface BatteryManager extends EventTarget {
     chargingTime: number;
     dischargingTime: number;
     level: number;
-    onchargingchange: ((this: BatteryManager, ev: Event) => any) | null;
-    onlevelchange: ((this: BatteryManager, ev: Event) => any) | null;
+    onchargingchange: ((this: BatteryManager, ev: Event) => void) | null;
+    onlevelchange: ((this: BatteryManager, ev: Event) => void) | null;
 }
 
 const BatteryIndicator: React.FC = () => {
@@ -17,7 +17,7 @@ const BatteryIndicator: React.FC = () => {
 
     useEffect(() => {
         const getBattery = async () => {
-            const nav = navigator as any;
+            const nav = navigator as Navigator & { getBattery?: () => Promise<BatteryManager> };
             if (nav.getBattery) {
                 try {
                     const battery: BatteryManager = await nav.getBattery();
@@ -30,7 +30,7 @@ const BatteryIndicator: React.FC = () => {
                     updateBattery();
                     battery.onlevelchange = updateBattery;
                     battery.onchargingchange = updateBattery;
-                } catch (e) {
+                } catch {
                     setIsSupported(false);
                 }
             } else {

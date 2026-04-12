@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useMusicStore } from '../../store/musicStore';
 import { Icons } from '../../assets/icons';
 import './MobileMusicWidget.css';

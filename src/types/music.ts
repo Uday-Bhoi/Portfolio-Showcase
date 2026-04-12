@@ -30,4 +30,7 @@ export interface MusicState {
     setDuration: (duration: number) => void;
     toggleShuffle: () => void;
     setLoopMode: (mode: LoopMode) => void;
+    fetchSpotifyTracks: (query: string) => Promise<void>;
+    error: string | null;
+    setError: (error: string | null) => void;
 }

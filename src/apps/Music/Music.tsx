@@ -19,8 +19,30 @@ const Music: React.FC = () => {
         isShuffle,
         toggleShuffle,
         loopMode,
-        setLoopMode
+        setLoopMode,
+        fetchSpotifyTracks,
+        error,
+        setError
     } = useMusicStore();
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [isSearching, setIsSearching] = React.useState(false);
+
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+
+        setIsSearching(true);
+        await fetchSpotifyTracks(searchQuery);
+        setIsSearching(false);
+    };
+
+    React.useEffect(() => {
+        // Initial load with some trending music or the user's favorite
+        if (tracks.length <= 1) { // Only if we only have the default track
+            fetchSpotifyTracks('The Weeknd');
+        }
+    }, []);
 
     const currentTrack = tracks.find(t => t.id === currentTrackId);
 
@@ -186,7 +208,26 @@ const Music: React.FC = () => {
                     <div className="track-list-section">
                         <div className="section-header">
                             <h2>Songs</h2>
+                            <form onSubmit={handleSearch} className="spotify-search-form">
+                                <span className="material-icons">search</span>
+                                <input
+                                    type="text"
+                                    placeholder="Search Spotify..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                {isSearching && <div className="search-loader"></div>}
+                            </form>
                         </div>
+
+                        {error && (
+                            <div className="spotify-error-banner">
+                                <span className="material-icons">error_outline</span>
+                                <span>{error}</span>
+                                <button onClick={() => setError(null)} className="material-icons">close</button>
+                            </div>
+                        )}
+
                         <div className="track-list-table">
                             <div className="table-header">
                                 <span className="col-num">#</span>

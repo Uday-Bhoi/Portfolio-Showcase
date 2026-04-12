@@ -1,0 +1,39 @@
+.spotify-widget {
+    position: absolute;
+    bottom: 260px;
+    left: 20px;
+    width: 260px;
+    z-index: 10;
+    transition: transform 0.2s ease;
+}
+
+.spotify-widget:hover {
+    transform: translateY(-2px);
+}
+
+.spotify-embed {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.spotify-badge img {
+    height: 14px;
+    object-fit: contain;
+}
+
+.spotify-embed {
+    border-radius: 12px;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* Ensure iframe doesn't have its own scrollbars if not needed */
+.spotify-embed::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .spotify-widget {
+        display: none; /* Hide on mobile like other widgets */
+    }
+}

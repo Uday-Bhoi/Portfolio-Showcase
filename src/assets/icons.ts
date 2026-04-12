@@ -66,4 +66,6 @@ export const Icons = {
     battery: batteryTray,
     search: searchTray,
     controlCenter: controlCenterTray,
+    github: 'https://cdn-icons-png.flaticon.com/512/25/25231.png',
+    resume: 'https://cdn-icons-png.flaticon.com/512/1070/1070628.png',
 }

@@ -47,10 +47,12 @@ const AudioEngine: React.FC = () => {
 
         window.addEventListener('click', handleInteraction, { once: true });
         window.addEventListener('keydown', handleInteraction, { once: true });
+        window.addEventListener('touchstart', handleInteraction, { once: true });
 
         return () => {
             window.removeEventListener('click', handleInteraction);
             window.removeEventListener('keydown', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
         };
     }, [hasInteracted, currentTrackId, tracks, isShuffle, playTrack, togglePlay]);
 

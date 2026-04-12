@@ -54,7 +54,7 @@ const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete, preloadImage })
             window.removeEventListener('keydown', preventDefault);
             window.removeEventListener('contextmenu', preventDefault);
         };
-    }, [onBootComplete]);
+    }, [onBootComplete, isImageLoaded]);
 
     return (
         <div className={`boot-screen ${isFadingOut ? 'fade-out' : ''}`}>

@@ -83,9 +83,15 @@ const AudioEngine: React.FC = () => {
     // Handle track changes
     useEffect(() => {
         if (audioRef.current && currentTrack) {
-            audioRef.current.src = currentTrack.src;
-            if (isPlaying && hasInteracted) {
-                audioRef.current.play().catch(() => togglePlay(false));
+            // Only update src if it has actually changed, preventing reload on play/pause
+            const currentSrc = audioRef.current.src;
+            // Get absolute URL of currentTrack.src to compare properly if needed,
+            // or just rely on endsWith for relative paths
+            if (!currentSrc || !currentSrc.includes(currentTrack.src)) {
+                audioRef.current.src = currentTrack.src;
+                if (isPlaying && hasInteracted) {
+                    audioRef.current.play().catch(() => togglePlay(false));
+                }
             }
         }
     }, [currentTrackId, currentTrack, isPlaying, hasInteracted, togglePlay]);

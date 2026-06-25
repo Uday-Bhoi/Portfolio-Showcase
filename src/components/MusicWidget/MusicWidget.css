@@ -2,90 +2,236 @@
     position: absolute;
     bottom: 100px;
     left: 20px;
-    width: 260px;
+    width: 240px; 
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 0.5px solid rgba(255, 255, 255, 0.3);
-    border-radius: 18px;
+    border-radius: 16px;
     padding: 14px;
-    cursor: pointer;
+    cursor: default;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
     z-index: 10;
-    color: #fff;
+    color: #ffffff;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
 }
 
 .music-widget:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25), 0 2px 5px rgba(0, 0, 0, 0.12);
 }
 
-.widget-content {
+.widget-premium-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.widget-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
-.widget-cover {
-    width: 44px;
-    height: 44px;
+.widget-header-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.widget-cover-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.widget-cover-large {
+    width: 160px;
+    height: 160px;
     border-radius: 8px;
     object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.widget-info {
-    flex: 1;
-    min-width: 0;
+.music-widget:hover .widget-cover-large {
+    transform: scale(1.03);
+}
+
+.widget-track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .widget-title {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 2px;
+    letter-spacing: -0.3px;
 }
 
 .widget-artist {
-    font-size: 11px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 500;
 }
 
-.widget-controls {
+.widget-progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.interactive-progress-bar {
+    position: relative;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: height 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.2s;
+}
+
+.interactive-progress-bar:hover {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.progress-slider-interactive {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.progress-slider-interactive::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: -4px; /* Center the thumb vertically */
+}
+
+.interactive-progress-bar:hover .progress-slider-interactive::-webkit-slider-thumb,
+.progress-slider-interactive:active::-webkit-slider-thumb {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.progress-slider-interactive::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.interactive-progress-bar:hover .progress-slider-interactive::-moz-range-thumb,
+.progress-slider-interactive:active::-moz-range-thumb {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.1s linear, background-color 0.4s ease;
+    z-index: 1;
+}
+
+.widget-time-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+.widget-controls-row {
     display: flex;
     align-items: center;
-    gap: 2px;
+    justify-content: space-between;
+    padding: 0 4px;
 }
 
 .widget-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.85);
     cursor: pointer;
-    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: background 0.2s;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .widget-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    transform: scale(1.1);
 }
 
-.widget-btn.mini .material-icons {
-    font-size: 18px;
+.widget-btn:active {
+    transform: scale(0.95);
 }
 
-.widget-btn.main .material-icons {
-    font-size: 24px;
+.widget-btn.small {
+    padding: 6px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.widget-btn.small:hover {
+    color: #ffffff;
+}
+
+.widget-btn.mini {
+    padding: 8px;
+}
+
+.widget-btn.main {
+    padding: 10px;
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.widget-btn.main:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget-btn.main:active {
+    transform: scale(0.95);
 }
 
 .widget-empty {
@@ -97,42 +243,5 @@
 
 .widget-icon-large {
     font-size: 32px !important;
-    opacity: 0.8;
-}
-
-.widget-footer {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.widget-progress-container {
-    height: 3px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.widget-progress-bar {
-    height: 100%;
-    background: #fa233b;
-}
-
-.widget-volume-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.mini-vol-icon {
-    font-size: 14px;
-    opacity: 0.6;
-}
-
-.widget-volume-slider {
-    flex: 1;
-    height: 3px;
-    accent-color: #fff;
-    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
 }

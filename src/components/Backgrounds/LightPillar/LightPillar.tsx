@@ -47,15 +47,14 @@ const LightPillar: React.FC<LightPillarProps> = ({
   const geometryRef = useRef<THREE.PlaneGeometry | null>(null);
   const mouseRef = useRef(new THREE.Vector2(0, 0));
   const rotationSpeedRef = useRef(rotationSpeed);
-  const [webGLSupported, setWebGLSupported] = useState(true);
-
-  useEffect(() => {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) {
-      setWebGLSupported(false);
+  const [webGLSupported] = useState(() => {
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+    } catch {
+      return false;
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (!containerRef.current || !webGLSupported) return;
@@ -70,7 +69,6 @@ const LightPillar: React.FC<LightPillarProps> = ({
     cameraRef.current = camera;
 
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    // @ts-ignore
     const isLowEndDevice = isMobile || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
     let effectiveQuality = quality;
@@ -89,14 +87,12 @@ const LightPillar: React.FC<LightPillarProps> = ({
       }
     };
 
-    // @ts-ignore
     const settings = qualitySettings[effectiveQuality] || qualitySettings.medium;
 
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
       alpha: true,
       powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
-      // @ts-ignore
       precision: settings.precision,
       stencil: false,
       depth: false

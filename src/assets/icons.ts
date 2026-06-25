@@ -21,6 +21,7 @@ import remindersIcon from './mac-icons/reminders.png';
 import contactsIcon from './mac-icons/contacts.png';
 import appstoreIcon from './mac-icons/appstore.png';
 import applemusicIcon from './mac-icons/applemusic.png';
+import pdfIcon from './pdf_icon.png';
 
 // System Tray Icons
 import batteryTray from './Right Bar macOS/battery.png';
@@ -67,5 +68,7 @@ export const Icons = {
     search: searchTray,
     controlCenter: controlCenterTray,
     github: 'https://cdn-icons-png.flaticon.com/512/25/25231.png',
-    resume: 'https://cdn-icons-png.flaticon.com/512/1070/1070628.png',
+
+
+    resume: pdfIcon,
 }

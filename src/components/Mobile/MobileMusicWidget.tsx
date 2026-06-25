@@ -3,14 +3,18 @@ import { useMusicStore } from '../../store/musicStore';
 import { Icons } from '../../assets/icons';
 import './MobileMusicWidget.css';
 
-const MobileMusicWidget: React.FC = () => {
+interface MobileMusicWidgetProps {
+  onClick?: (e: React.MouseEvent) => void;
+}
+
+const MobileMusicWidget: React.FC<MobileMusicWidgetProps> = ({ onClick }) => {
   const { currentTrackId, tracks, isPlaying, togglePlay, nextTrack, prevTrack } = useMusicStore();
   const currentTrack = tracks.find(t => t.id === currentTrackId) || tracks[0];
 
   if (!currentTrack) return null;
 
   return (
-    <div className="mobile-music-widget">
+    <div className="mobile-music-widget" onClick={onClick}>
       {/* Dynamic Spotify-inspired background */}
       <div 
         className="widget-dynamic-bg" 
@@ -19,7 +23,7 @@ const MobileMusicWidget: React.FC = () => {
       
       <div className="widget-content">
         <div className="track-info">
-          <div className="album-art">
+          <div className={`album-art ${isPlaying ? 'playing' : ''}`}>
             <img src={currentTrack.cover || Icons.music} alt="" />
           </div>
           <div className="text-details">

@@ -7,59 +7,148 @@
     background-position: center;
     background-color: #000;
     overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "SFNS Display", "Inter", sans-serif;
 }
 
 /* Global mobile utilities */
 .mobile-ui-root * {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    box-sizing: border-box;
 }
 
-.desktop-notice-overlay {
+/* Lockscreen wrapper slide-up animation */
+.lockscreen-container {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
+    z-index: 20000;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.lockscreen-container.slide-up {
+    transform: translateY(-100%);
+}
+
+/* iOS-style notification banner */
+.ios-notification-banner {
+    position: fixed;
+    top: 52px; /* Safe space below status bar / dynamic island */
+    left: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(35px) saturate(210%);
+    -webkit-backdrop-filter: blur(35px) saturate(210%);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    border-radius: 20px;
+    padding: 12px 14px 8px 14px;
+    color: #000000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transform: translateY(0);
+    animation: iosNotificationSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-dark .ios-notification-banner {
+    background: rgba(28, 28, 30, 0.42);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.ios-notification-banner.dismissing {
+    animation: iosNotificationSlideOut 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes iosNotificationSlideIn {
+    from {
+        transform: translateY(-130%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes iosNotificationSlideOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-130%);
+        opacity: 0;
+    }
+}
+
+.ios-notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ios-notification-app-info {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ios-notification-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.desktop-notice-modal {
-    background: rgba(255,255,255,0.9);
-    padding: 30px 20px;
-    border-radius: 24px;
-    width: 85%;
-    max-width: 320px;
-    text-align: center;
-    color: #000;
-}
-
-.notice-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-}
-
-.desktop-notice-modal h3 {
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-.desktop-notice-modal p {
-    font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 25px;
-    line-height: 1.4;
-}
-
-.desktop-notice-modal button {
-    width: 100%;
-    padding: 14px;
-    background: #007AFF;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
+.ios-notification-app-name {
+    font-size: 11px;
     font-weight: 600;
-    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+}
+
+.ios-notification-time {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+.ios-notification-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-left: 2px;
+}
+
+.ios-notification-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.1px;
+}
+
+.ios-notification-body {
+    font-size: 13px;
+    line-height: 1.4;
+    opacity: 0.85;
+    margin: 0;
+}
+
+.ios-notification-grabber {
+    width: 36px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    margin: 4px auto 0 auto;
+}
+
+.theme-dark .ios-notification-grabber {
+    background: rgba(255, 255, 255, 0.12);
 }

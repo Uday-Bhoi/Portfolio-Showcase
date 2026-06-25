@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './MobileLockScreen.css';
-import { Icons } from '../../assets/icons';
+
 
 interface MobileLockScreenProps {
   onUnlock: () => void;
@@ -46,14 +46,38 @@ const MobileLockScreen: React.FC<MobileLockScreenProps> = ({ onUnlock, wallpaper
 
   const handleTouchEnd = () => {
     setIsSwiping(false);
-    if (swipeOffset > 150) {
+    if (swipeOffset > 100) {
       onUnlock();
     } else {
       setSwipeOffset(0);
     }
   };
 
-  // Also support click for dev testing
+  const handleMouseDown = (e: React.MouseEvent) => {
+    startY.current = e.clientY;
+    setIsSwiping(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isSwiping) return;
+    const currentY = e.clientY;
+    const diff = startY.current - currentY;
+    if (diff > 0) {
+      setSwipeOffset(diff);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (isSwiping) {
+      setIsSwiping(false);
+      if (swipeOffset > 100) {
+        onUnlock();
+      } else {
+        setSwipeOffset(0);
+      }
+    }
+  };
+
   const handleClick = () => {
     onUnlock();
   };
@@ -64,55 +88,45 @@ const MobileLockScreen: React.FC<MobileLockScreenProps> = ({ onUnlock, wallpaper
         style={{ 
             backgroundImage: `url(${wallpaper})`,
             transform: `translateY(-${swipeOffset}px)`,
-            transition: isSwiping ? 'none' : 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)'
+            transition: isSwiping ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
         }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
     >
-      <div className="status-bar-lock">
-        <div className="status-left">
-           <span>Carrier</span>
-           <img src={Icons.wifi} alt="" className="status-icon" />
-        </div>
-        <div className="status-right">
-            <span style={{ fontSize: '12px', fontWeight: 'bold', marginRight: '4px' }}>5G</span>
-           <img src={Icons.battery} alt="" className="status-icon" />
-        </div>
-      </div>
-
-      <div className="lock-content" style={{ opacity: 1 - swipeOffset / 400 }}>
+      {/* Center Lock Content */}
+      <div className="lock-content" style={{ opacity: Math.max(0, 1 - swipeOffset / 300) }}>
         <div className="lock-icon-ios">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
-            <path d="M12 13a2 2 0 100-4 2 2 0 000 4z"/>
-            <path fillRule="evenodd" d="M6 10V7a6 6 0 1112 0v3h1a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h1zm2 0h8V7a4 4 0 10-8 0v3z" clipRule="evenodd"/>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
           </svg>
         </div>
-        <div className="time-display-ios">{formattedTime}</div>
         <div className="date-display-ios">{formattedDate}</div>
+        <div className="time-display-ios">{formattedTime}</div>
       </div>
 
-      <div className="lock-widgets-container">
-          {/* Future iOS widgets could go here */}
-      </div>
-
-      <div className="lock-footer-ios">
+      {/* Flashlight and Camera Quick Buttons */}
+      <div className="lock-footer-ios" style={{ opacity: Math.max(0, 1 - swipeOffset / 200) }}>
         <div className="footer-action-btn">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
-            <path d="M13 3a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm4.8 2.2a1 1 0 010 1.4L16.4 8a1 1 0 11-1.4-1.4l1.4-1.4a1 1 0 011.4 0zM21 12a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zm-3.2 5.4a1 1 0 01-1.4 0l-1.4-1.4a1 1 0 111.4-1.4l1.4 1.4a1 1 0 010 1.4zM13 18a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm-6.8-.2a1 1 0 010-1.4l1.4-1.4a1 1 0 111.4 1.4l-1.4 1.4a1 1 0 01-1.4 0zM3 12a1 1 0 011-1h2a1 1 0 110 2H4a1 1 0 01-1-1zm2.2-6.8a1 1 0 011.4 0L8 6.6a1 1 0 11-1.4 1.4l-1.4-1.4a1 1 0 010-1.4z" />
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M9 2h6v4H9zm1.5 5h3L16 11v9c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-9zm2 4v3h1v-3z"/>
           </svg>
         </div>
         <div className="footer-action-btn">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
-            <path d="M4 5a3 3 0 013-3h10a3 3 0 013 3v14a3 3 0 01-3 3H7a3 3 0 01-3-3V5zm3-1a1 1 0 00-1 1v14a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1H7z" />
-            <path d="M12 17a3 3 0 100-6 3 3 0 000 6z" />
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M9 3L7.17 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.17L15 3H9z"/>
           </svg>
         </div>
       </div>
 
+      {/* Bottom swipe indicator */}
       <div className="home-bar-ios" onClick={handleClick}>
-        <div className="bar-indicator"></div>
         <span>Swipe up to unlock</span>
+        <div className="bar-indicator"></div>
       </div>
     </div>
   );

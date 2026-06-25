@@ -12,7 +12,10 @@ import Resume from '../../apps/Resume';
 
 const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
   const [time, setTime] = useState(new Date());
-  const [activeApp, setActiveApp] = useState<string | null>(null);
+  const [activeApp, setActiveApp] = useState<string | null>(() => {
+    return sessionStorage.getItem('mobile_active_app') || null;
+  });
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -20,7 +23,8 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
   }, []);
 
   const formattedTime = useMemo(() => {
-    return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    // 24-hour style format for status bar
+    return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
   }, [time]);
 
   const apps = [
@@ -39,11 +43,31 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
     { type: 'settings', icon: Icons.settings },
   ];
 
+  const openApp = (type: string, e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    document.documentElement.style.setProperty('--click-x', `${x}px`);
+    document.documentElement.style.setProperty('--click-y', `${y}px`);
+    
+    setActiveApp(type);
+    sessionStorage.setItem('mobile_active_app', type);
+  };
+
+  const closeApp = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setActiveApp(null);
+      setIsClosing(false);
+      sessionStorage.removeItem('mobile_active_app');
+    }, 350); // Match CSS close animation duration
+  };
+
   return (
     <div className="mobile-home-container" style={{ backgroundImage: `url(${wallpaper})` }}>
-      {/* Status Bar */}
-      <div className="iphone-status-bar">
-        <span className="time">{formattedTime.split(' ')[0]}</span>
+      {/* iOS Fixed Status Bar */}
+      <div className={`iphone-status-bar ${activeApp ? 'status-app-open' : ''}`}>
+        <span className="time">{formattedTime}</span>
         <div className="dynamic-island">
             <div className="island-content">
                 <div className="island-indicator"></div>
@@ -52,13 +76,18 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
         <div className="status-right">
           <img src={Icons.wifi} className="status-icon" alt="" />
           <span className="network-type">5G</span>
-          <img src={Icons.battery} className="status-icon" alt="" style={{ width: '25px', filter: 'none' }} />
+          <div className="battery-container">
+             <span className="battery-pct">88%</span>
+             <div className="battery-icon-wrapper">
+               <div className="battery-level" style={{ width: '88%' }}></div>
+             </div>
+          </div>
         </div>
       </div>
 
       {/* Hero Section - Music Widget */}
       <div className="mobile-hero-section">
-          <MobileMusicWidget />
+          <MobileMusicWidget onClick={(e) => openApp('music', e)} />
       </div>
 
       {/* Home Screen Grid */}
@@ -67,7 +96,7 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
           <div 
             key={app.type} 
             className="ios-app-icon"
-            onClick={() => app.onClick ? app.onClick() : setActiveApp(app.type)}
+            onClick={(e) => app.onClick ? app.onClick() : openApp(app.type, e)}
           >
             <div className="icon-wrapper">
               <img src={app.icon} alt={app.name} />
@@ -84,7 +113,7 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
             <div 
               key={dockApp.type} 
               className="dock-item"
-              onClick={() => setActiveApp(dockApp.type)}
+              onClick={(e) => openApp(dockApp.type, e)}
             >
               <img src={dockApp.icon} alt="" />
             </div>
@@ -92,21 +121,25 @@ const MobileHome: React.FC<{ wallpaper: string }> = ({ wallpaper }) => {
         </div>
       </div>
 
-      <div className="home-indicator"></div>
+      {/* Global iOS Bottom Home Indicator Gesture Bar */}
+      <div 
+        className={`home-indicator-global ${activeApp ? 'app-open' : ''}`} 
+        onClick={activeApp ? closeApp : undefined}
+      ></div>
 
       {/* App Overlay */}
       {activeApp && (
-        <div className="mobile-app-overlay">
+        <div className={`mobile-app-overlay ${isClosing ? 'closing' : ''} mobile-app-${activeApp}`}>
           <div className="app-header">
-            <button className="back-button" onClick={() => setActiveApp(null)}>
-              <span style={{ fontSize: '24px', marginRight: '4px' }}>‹</span>
-              Home
+            <button className="back-button" onClick={closeApp}>
+              <span className="back-arrow">‹</span>
+              <span>Back</span>
             </button>
-            <h2>{apps.find(a => a.type === activeApp)?.name}</h2>
+            <h2 className="app-header-title">{apps.find(a => a.type === activeApp)?.name}</h2>
+            <div className="header-right-placeholder"></div>
           </div>
           <div className="app-content-mobile">
             {apps.find(a => a.type === activeApp)?.component}
-            <div className="home-indicator" onClick={() => setActiveApp(null)} style={{ cursor: 'pointer', background: 'rgba(0,0,0,0.1)' }}></div>
           </div>
         </div>
       )}

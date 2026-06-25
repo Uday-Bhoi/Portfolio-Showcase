@@ -1,38 +1,38 @@
 .mobile-music-widget {
   position: relative;
   width: 100%;
-  height: 90px;
-  background: rgba(40, 40, 40, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
+  height: 94px;
+  background: rgba(30, 30, 30, 0.45);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 22px; /* iOS standard widget radius */
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  padding: 0 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   margin: 0 auto;
 }
 
 .widget-dynamic-bg {
     position: absolute;
-    inset: -15px;
+    inset: -20px;
     background-size: cover;
     background-position: center;
-    filter: blur(40px) brightness(0.7);
-    transform: scale(1.15);
+    filter: blur(35px) saturate(240%) brightness(0.6);
+    transform: scale(1.2);
     z-index: 0;
     opacity: 0.9;
     transition: background-image 0.8s ease-in-out;
 }
 
-/* Gradient overlay for depth */
+/* Accent overlay */
 .mobile-music-widget::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.15) 100%);
     z-index: 1;
     pointer-events: none;
 }
@@ -54,14 +54,20 @@
 }
 
 .album-art {
-  width: 58px;
-  height: 58px;
-  border-radius: 12px; /* iOS style rounding */
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   background: #222;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  transform: scale(0.92);
+}
+
+.album-art.playing {
+  transform: scale(1.04);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
 .album-art img {
@@ -99,7 +105,7 @@
 .widget-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .ctrl-btn {
@@ -124,12 +130,12 @@
 }
 
 .play-pause {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.14);
     border-radius: 50%;
     padding: 10px;
     backdrop-filter: blur(5px);
 }
 
 .play-pause:active {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.24);
 }

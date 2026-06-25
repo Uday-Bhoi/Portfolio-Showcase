@@ -13,7 +13,6 @@ import Music from '../apps/Music/Music';
 import Settings from '../apps/Settings/Settings';
 import Resume from '../apps/Resume';
 import MusicWidget from './MusicWidget/MusicWidget';
-import SpotifyWidget from './SpotifyWidget/SpotifyWidget';
 import NowPlaying from './NowPlaying/NowPlaying';
 import CalendarWidget from './CalendarWidget/CalendarWidget';
 import BatteryIndicator from './BatteryIndicator/BatteryIndicator';
@@ -277,28 +276,74 @@ const DesktopUI: React.FC = () => {
           ))}
         </div>
         <div className="menu-right">
-          <div className="system-icon-group">
+          <div className="system-icon-group" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <NowPlaying />
-            <img src={Icons.stop} className="system-icon" title="Stop" alt="" />
-            <img src={Icons.airplay} className="system-icon" title="AirPlay" alt="" />
-            <img src={Icons.nowPlaying} className="system-icon" title="Now Playing" alt="" />
-            <img src={Icons.wifi} className="system-icon" title="WiFi" alt="" />
+            
+            {/* AirPlay Icon */}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="system-icon">
+              <title>AirPlay</title>
+              <rect x="3" y="4" width="18" height="12" rx="2" />
+              <path d="M12 16L8 20H16L12 16Z" fill="currentColor" />
+            </svg>
+
+            {/* Bluetooth Icon */}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="system-icon">
+              <title>Bluetooth</title>
+              <path d="M6.5 6.5L17.5 17.5L12 23V1L17.5 6.5L6.5 17.5" />
+            </svg>
+
+            {/* WiFi Icon */}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="system-icon">
+              <title>WiFi</title>
+              <path d="M12 18h.01" strokeWidth="3" />
+              <path d="M8.5 14.5a5 5 0 0 1 7 0" />
+              <path d="M5 11.5a10 10 0 0 1 14 0" />
+              <path d="M1.5 8.5a15 15 0 0 1 21 0" />
+            </svg>
+
             <BatteryIndicator />
-            <img
-              src={Icons.search}
-              className="system-icon cursor-pointer"
-              title="Spotlight"
-              alt=""
+
+            {/* Spotlight Search Icon */}
+            <svg 
+              viewBox="0 0 24 24" 
+              width="16" height="16" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              className="system-icon cursor-pointer" 
               onClick={() => toggleLaunchpad(true)}
-            />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <img
-                src={Icons.controlCenter}
-                className="system-icon cursor-pointer"
-                title="System Settings"
-                alt=""
+            >
+              <title>Spotlight</title>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+
+            {/* Control Center Icon */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', position: 'relative' }}>
+              <svg 
+                viewBox="0 0 24 24" 
+                width="16" height="16" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="system-icon cursor-pointer" 
                 onClick={() => openWindow('settings', 'System Settings')}
-              />
+              >
+                <title>System Settings</title>
+                <line x1="4" y1="21" x2="4" y2="14" />
+                <line x1="4" y1="10" x2="4" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12" y2="3" />
+                <line x1="20" y1="21" x2="20" y2="16" />
+                <line x1="20" y1="12" x2="20" y2="3" />
+                <line x1="2" y1="14" x2="6" y2="14" />
+                <line x1="10" y1="8" x2="14" y2="8" />
+                <line x1="18" y1="16" x2="22" y2="16" />
+              </svg>
               <div className="notification-dot"></div>
             </div>
           </div>
@@ -308,8 +353,7 @@ const DesktopUI: React.FC = () => {
 
       {/* 2. Desktop Workspace Content - Widgets removed */}
       <main className="desktop-content">
-        <div className="widgets-layer">
-          <SpotifyWidget />
+        <div className={`widgets-layer ${isAnyWindowMaximized ? 'behind-windows' : ''}`}>
           <MusicWidget />
           <CalendarWidget />
         </div>

@@ -38,8 +38,6 @@ class SpotifyService {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Spotify token error response:', errorText);
-
             try {
                 const errorJson = JSON.parse(errorText);
                 throw new Error(errorJson.error_description || errorJson.error || `Token error: ${response.status}`);
@@ -64,8 +62,6 @@ class SpotifyService {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Spotify search error response:', errorText);
-
             // Try to parse as JSON if possible, otherwise use raw text
             try {
                 const errorJson = JSON.parse(errorText);

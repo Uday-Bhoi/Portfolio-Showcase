@@ -7,32 +7,11 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
+  padding: calc(env(safe-area-inset-top) + 24px) 20px calc(env(safe-area-inset-bottom) + 16px) 20px;
   overflow: hidden;
   user-select: none;
   touch-action: none;
   cursor: default;
-}
-
-.status-bar-lock {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 10px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.status-left, .status-right {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.status-icon {
-  width: 18px;
-  height: 18px;
-  filter: invert(1);
 }
 
 .lock-content {
@@ -46,39 +25,47 @@
 }
 
 .lock-icon-ios {
-    margin-bottom: 15px;
-}
-
-.time-display-ios {
-  font-size: 5.5rem;
-  font-weight: 800;
-  margin-bottom: -10px;
-  line-height: 1;
-  letter-spacing: -2px;
-  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 
 .date-display-ios {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.1px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  margin-bottom: 4px;
   opacity: 0.95;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+}
+
+.time-display-ios {
+  font-size: 5.6rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -2px;
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.25));
 }
 
 .lock-footer-ios {
   position: absolute;
-  bottom: 80px;
+  bottom: calc(env(safe-area-inset-bottom) + 72px);
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 45px;
+  padding: 0 40px;
+  pointer-events: auto;
+  transition: opacity 0.3s ease-out;
 }
 
 .footer-action-btn {
   width: 50px;
   height: 50px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -86,45 +73,55 @@
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  transition: transform 0.15s, background 0.15s;
+  cursor: pointer;
 }
 
 .footer-action-btn:active {
     transform: scale(0.9);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.55);
 }
 
 .home-bar-ios {
   position: absolute;
-  bottom: 12px;
+  bottom: calc(env(safe-area-inset-bottom) + 8px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
+  cursor: pointer;
 }
 
 .home-bar-ios span {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    opacity: 0.8;
+    letter-spacing: 0.8px;
+    opacity: 0.7;
     text-transform: uppercase;
+    animation: textPulse 2.5s infinite ease-in-out;
+    margin-bottom: 6px;
 }
 
+/* Single home indicator pill — sits below the swipe text */
 .bar-indicator {
-  width: 140px;
+  width: 130px;
   height: 5px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
-  animation: barSlideHint 2s infinite ease-in-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 @keyframes barSlideHint {
   0%, 100% { transform: translateY(0); opacity: 0.8; }
-  50% { transform: translateY(-5px); opacity: 1; }
+  50% { transform: translateY(-4px); opacity: 1; }
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.95; }
 }
 
 @media (max-width: 400px) {

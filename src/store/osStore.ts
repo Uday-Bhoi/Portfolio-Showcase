@@ -7,7 +7,7 @@ interface WindowState {
     activeApp: string; // The app currently in the menu bar
     isLaunchpadOpen: boolean;
     theme: 'light' | 'dark' | 'custom';
-    wallpaper: 'standard' | 'light-pillar' | 'floating-lines';
+    wallpaper: 'standard' | 'light-pillar' | 'floating-lines' | 'mando' | 'sequoia' | 'lake' | 'cyberpunk' | 'desert';
 
     // Actions
     openWindow: (type: AppType, title: string) => void;
@@ -20,7 +20,7 @@ interface WindowState {
     setActiveApp: (label: string) => void;
     toggleLaunchpad: (isOpen?: boolean) => void;
     setTheme: (theme: 'light' | 'dark' | 'custom') => void;
-    setWallpaper: (wallpaper: 'standard' | 'light-pillar' | 'floating-lines') => void;
+    setWallpaper: (wallpaper: 'standard' | 'light-pillar' | 'floating-lines' | 'mando' | 'sequoia' | 'lake' | 'cyberpunk' | 'desert') => void;
 }
 
 export const useOSStore = create<WindowState>((set) => ({

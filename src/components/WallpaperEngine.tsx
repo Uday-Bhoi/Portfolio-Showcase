@@ -3,6 +3,11 @@ import { useOSStore } from '../store/osStore';
 import LightPillar from './Backgrounds/LightPillar/LightPillar';
 import FloatingLines from './Backgrounds/FloatingLines/FloatingLines';
 import macosWallpaper from '../assets/Wallpapers/macos-wall.jpg';
+import mandoWallpaper from '../assets/Wallpapers/mando_wall.jpg';
+import sequoiaWallpaper from '../assets/Wallpapers/sequoia_wall.png';
+import lakeWallpaper from '../assets/Wallpapers/lake_wall.png';
+import cyberpunkWallpaper from '../assets/Wallpapers/cyberpunk_wall.png';
+import desertWallpaper from '../assets/Wallpapers/desert_wall.png';
 
 const WallpaperEngine: React.FC = () => {
     const theme = useOSStore(state => state.theme);
@@ -13,6 +18,26 @@ const WallpaperEngine: React.FC = () => {
             <div
                 className={`wallpaper-static ${wallpaper === 'standard' ? 'visible' : ''}`}
                 style={{ backgroundImage: `url(${macosWallpaper})` }}
+            />
+            <div
+                className={`wallpaper-static ${wallpaper === 'mando' ? 'visible' : ''}`}
+                style={{ backgroundImage: `url(${mandoWallpaper})` }}
+            />
+            <div
+                className={`wallpaper-static ${wallpaper === 'sequoia' ? 'visible' : ''}`}
+                style={{ backgroundImage: `url(${sequoiaWallpaper})` }}
+            />
+            <div
+                className={`wallpaper-static ${wallpaper === 'lake' ? 'visible' : ''}`}
+                style={{ backgroundImage: `url(${lakeWallpaper})` }}
+            />
+            <div
+                className={`wallpaper-static ${wallpaper === 'cyberpunk' ? 'visible' : ''}`}
+                style={{ backgroundImage: `url(${cyberpunkWallpaper})` }}
+            />
+            <div
+                className={`wallpaper-static ${wallpaper === 'desert' ? 'visible' : ''}`}
+                style={{ backgroundImage: `url(${desertWallpaper})` }}
             />
             {wallpaper === 'light-pillar' && (
                 <div className="wallpaper-animated">

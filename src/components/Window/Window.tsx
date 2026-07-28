@@ -50,12 +50,26 @@ const Window: React.FC<WindowProps> = ({
         window.addEventListener('mouseup', stopResize);
     };
 
+    const menuBarEl = typeof document !== 'undefined' ? document.querySelector('.menu-bar') : null;
+    const dockEl = typeof document !== 'undefined' ? document.querySelector('.dock-container') : null;
+    const menuBarHeight = menuBarEl ? menuBarEl.clientHeight : 32;
+    const dockHeight = dockEl ? dockEl.clientHeight : 80;
+    const currentWidth = win?.width || 800;
+
+    const dragBounds = {
+        top: menuBarHeight,
+        left: Math.min(0, -currentWidth + 140),
+        right: Math.max(0, window.innerWidth - 140),
+        bottom: Math.max(menuBarHeight + 40, window.innerHeight - dockHeight - 40),
+    };
+
     return (
         <Draggable
             nodeRef={nodeRef}
             handle=".window-header"
             onStart={() => focusWindow(id)}
             disabled={isMaximized || isResizing}
+            bounds={dragBounds}
             position={isMaximized ? { x: 0, y: 0 } : (win?.x !== undefined && win?.y !== undefined ? { x: win.x, y: win.y } : { x: 0, y: 0 })}
             onDrag={(_e, data) => {
                 updateWindowPosition(id, data.x, data.y);
@@ -128,4 +142,4 @@ const Window: React.FC<WindowProps> = ({
     );
 };
 
-export default Window;
+export default React.memo(Window);

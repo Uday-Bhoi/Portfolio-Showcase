@@ -3,26 +3,66 @@
   inset: 0;
   background: #000;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 99999;
   color: #fff;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
 }
 
-.greeting-text {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "SFNS Display", "Inter", sans-serif;
-  font-size: 3.2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+.boot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  animation: bootFadeInScale 2.2s cubic-bezier(0.25, 1, 0.2, 1) forwards;
 }
 
-.animate-greeting {
-  animation: greetingFade 2.5s ease-in-out forwards;
+.apple-logo-img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
 }
 
-@keyframes greetingFade {
-  0% { opacity: 0; transform: scale(0.9); }
-  10% { opacity: 1; transform: scale(1); }
-  90% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.1); }
+.ios-progress-bar-container {
+  width: 140px;
+  height: 4px;
+  background: #2c2c2e;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
 }
+
+.ios-progress-bar-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: width 0.15s cubic-bezier(0.25, 1, 0.2, 1);
+  will-change: width;
+}
+
+@keyframes bootFadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translate3d(0, 0, 0);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+}
+

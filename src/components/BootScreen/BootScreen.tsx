@@ -11,40 +11,61 @@ const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete, preloadImage })
     const [progress, setProgress] = useState(0);
     const [isFadingOut, setIsFadingOut] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(!preloadImage);
+    const [isFontsLoaded, setIsFontsLoaded] = useState(false);
 
     useEffect(() => {
+        let isMounted = true;
+
+        if ('fonts' in document) {
+            document.fonts.ready.then(() => {
+                if (isMounted) setIsFontsLoaded(true);
+            }).catch(() => {
+                if (isMounted) setIsFontsLoaded(true);
+            });
+        } else {
+            queueMicrotask(() => {
+                if (isMounted) setIsFontsLoaded(true);
+            });
+        }
+
         if (preloadImage) {
             const img = new Image();
             img.src = preloadImage;
-            img.onload = () => setIsImageLoaded(true);
-            img.onerror = () => setIsImageLoaded(true); // Continue anyway if load fails
+            img.onload = () => { if (isMounted) setIsImageLoaded(true); };
+            img.onerror = () => { if (isMounted) setIsImageLoaded(true); };
+        } else {
+            queueMicrotask(() => {
+                if (isMounted) setIsImageLoaded(true);
+            });
         }
+
+        return () => {
+            isMounted = false;
+        };
     }, [preloadImage]);
 
     useEffect(() => {
-        const duration = 3000; // 3 seconds
-        const interval = 30; // Update every 30ms
+        const duration = 2400;
+        const interval = 30;
         const step = 100 / (duration / interval);
 
         const timer = setInterval(() => {
             setProgress((prev) => {
                 if (prev >= 100) {
-                    // Only finish if image is also loaded
-                    if (isImageLoaded) {
+                    if (isImageLoaded && isFontsLoaded) {
                         clearInterval(timer);
                         setTimeout(() => {
                             setIsFadingOut(true);
-                            setTimeout(onBootComplete, 800);
-                        }, 500);
+                            setTimeout(onBootComplete, 600);
+                        }, 300);
                         return 100;
                     }
-                    return 99; // Hold at 99 until image loads
+                    return 99;
                 }
                 return Math.min(prev + step, 100);
             });
         }, interval);
 
-        // Prevent interactions
         const preventDefault = (e: Event) => e.preventDefault();
         window.addEventListener('keydown', preventDefault);
         window.addEventListener('contextmenu', preventDefault);
@@ -54,7 +75,7 @@ const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete, preloadImage })
             window.removeEventListener('keydown', preventDefault);
             window.removeEventListener('contextmenu', preventDefault);
         };
-    }, [onBootComplete, isImageLoaded]);
+    }, [onBootComplete, isImageLoaded, isFontsLoaded]);
 
     return (
         <div className={`boot-screen ${isFadingOut ? 'fade-out' : ''}`}>

@@ -19,23 +19,33 @@ body,
 :root {
     --bg-color: #f5f5f7;
     --text-color: #1d1d1f;
+    --text-secondary: #6e6e73;
     --menu-bg: rgba(255, 255, 255, 0.4);
     --menu-text: #000;
-    --window-bg: rgba(255, 255, 255, 0.8);
+    --window-bg: rgba(255, 255, 255, 0.85);
     --window-header-bg: rgba(246, 246, 246, 0.9);
     --dock-bg: rgba(255, 255, 255, 0.25);
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --border-subtle: rgba(0, 0, 0, 0.1);
     --icon-filter: brightness(0);
+    --shadow-window: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.theme-dark {
+.theme-dark,
+:root.theme-dark,
+html.theme-dark {
     --bg-color: #000000;
     --text-color: #ffffff;
-    --menu-bg: rgba(45, 45, 45, 0.6);
+    --text-secondary: #a1a1a6;
+    --menu-bg: rgba(45, 45, 45, 0.65);
     --menu-text: #fff;
-    --window-bg: rgba(30, 30, 30, 0.85);
-    --window-header-bg: rgba(45, 45, 45, 0.95);
-    --dock-bg: rgba(0, 0, 0, 0.4);
+    --window-bg: rgba(28, 28, 30, 0.92);
+    --window-header-bg: rgba(42, 42, 44, 0.95);
+    --dock-bg: rgba(0, 0, 0, 0.45);
+    --card-bg: rgba(38, 38, 40, 0.85);
+    --border-subtle: rgba(255, 255, 255, 0.12);
     --icon-filter: invert(1);
+    --shadow-window: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 body,
@@ -457,11 +467,7 @@ html {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 9999; /* Float on top of floating windows by default */
-}
-
-.widgets-layer.behind-windows {
-    z-index: 1; /* Stay on desktop screen (behind windows) when any window is maximized */
+    z-index: 5; /* Permanently anchored to Desktop Layer behind all application windows */
 }
 
 .widgets-layer > * {

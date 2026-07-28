@@ -12,7 +12,7 @@ import { useOSStore } from '../store/osStore';
 import './MobileUI.css';
 
 const MobileUI: React.FC = () => {
-  const activeWallpaper = useOSStore(state => state.wallpaper);
+  const { wallpaper: activeWallpaper, theme } = useOSStore();
 
   const currentWallpaperUrl = useMemo(() => {
     switch (activeWallpaper) {
@@ -29,12 +29,8 @@ const MobileUI: React.FC = () => {
         return macosWallpaper;
     }
   }, [activeWallpaper]);
-  const [stage, setStage] = useState<'loader' | 'active'>(() => {
-    return (sessionStorage.getItem('mobile_stage') as 'loader' | 'active') || 'loader';
-  });
-  const [isLocked, setIsLocked] = useState(() => {
-    return sessionStorage.getItem('mobile_unlocked') !== 'true';
-  });
+  const [stage, setStage] = useState<'loader' | 'active'>('loader');
+  const [isLocked, setIsLocked] = useState(true);
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [showDesktopNotice, setShowDesktopNotice] = useState(() => {
     return sessionStorage.getItem('mobile_desktop_notice_shown') !== 'true';
@@ -47,6 +43,7 @@ const MobileUI: React.FC = () => {
       setIsLocked(false);
       setIsUnlocking(false);
       sessionStorage.setItem('mobile_unlocked', 'true');
+      sessionStorage.setItem('mobile_just_unlocked', 'true');
       sessionStorage.setItem('mobile_stage', 'active');
     }, 600); // Match transition duration
   };
@@ -72,7 +69,7 @@ const MobileUI: React.FC = () => {
   }, [stage, isLocked, showDesktopNotice]);
 
   return (
-    <div className="mobile-ui-root" style={{ backgroundImage: `url(${currentWallpaperUrl})` }}>
+    <div className={`mobile-ui-root theme-${theme}`} style={{ backgroundImage: `url(${currentWallpaperUrl})` }}>
       {stage === 'loader' && (
         <MobileLoader onComplete={() => {
           setStage('active');

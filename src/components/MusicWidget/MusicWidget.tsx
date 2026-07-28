@@ -153,4 +153,4 @@ const MusicWidget: React.FC = () => {
     );
 };
 
-export default MusicWidget;
+export default React.memo(MusicWidget);

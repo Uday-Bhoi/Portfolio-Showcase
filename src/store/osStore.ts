@@ -17,18 +17,41 @@ interface WindowState {
     focusWindow: (id: string) => void;
     updateWindowPosition: (id: string, x: number, y: number) => void;
     updateWindowSize: (id: string, width: number, height: number) => void;
+    clampWindowsToViewport: () => void;
     setActiveApp: (label: string) => void;
     toggleLaunchpad: (isOpen?: boolean) => void;
     setTheme: (theme: 'light' | 'dark' | 'custom') => void;
     setWallpaper: (wallpaper: 'standard' | 'light-pillar' | 'floating-lines' | 'mando' | 'sequoia' | 'lake' | 'cyberpunk' | 'desert') => void;
 }
 
+const getWorkspaceBounds = () => {
+    const menuBarEl = document.querySelector('.menu-bar');
+    const dockEl = document.querySelector('.dock-container');
+    const menuBarHeight = menuBarEl ? menuBarEl.clientHeight : 32;
+    const dockHeight = dockEl ? dockEl.clientHeight : 80;
+
+    const availableWidth = window.innerWidth;
+    const availableHeight = Math.max(300, window.innerHeight - menuBarHeight - dockHeight);
+
+    return { menuBarHeight, dockHeight, availableWidth, availableHeight };
+};
+
+const getInitialTheme = (): 'light' | 'dark' | 'custom' => {
+    if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('os_theme');
+        if (stored === 'dark' || stored === 'light' || stored === 'custom') {
+            return stored;
+        }
+    }
+    return 'light';
+};
+
 export const useOSStore = create<WindowState>((set) => ({
     windows: [],
     focusedWindowId: null,
     activeApp: 'Finder',
     isLaunchpadOpen: false,
-    theme: 'light',
+    theme: getInitialTheme(),
     wallpaper: 'standard',
 
     openWindow: (type, title) => set((state) => {
@@ -56,26 +79,37 @@ export const useOSStore = create<WindowState>((set) => ({
 
         const maxZ = Math.max(...state.windows.map(w => w.zIndex), 0);
 
+        const { menuBarHeight, dockHeight, availableWidth, availableHeight } = getWorkspaceBounds();
+
         // App-specific standard dimensions
         const defaultSizes: Record<string, { w: number, h: number }> = {
             'settings': { w: 900, h: 600 },
-            'safari': { w: 1024, h: 768 },
-            'music': { w: 900, h: 650 },
-            'portfolio': { w: 900, h: 650 },
-            'finder': { w: 850, h: 550 },
-            'terminal': { w: 800, h: 500 }
+            'safari': { w: 1024, h: 700 },
+            'music': { w: 900, h: 620 },
+            'portfolio': { w: 900, h: 620 },
+            'finder': { w: 850, h: 520 },
+            'terminal': { w: 800, h: 480 }
         };
 
-        const { w: width, h: height } = defaultSizes[type] || { w: 900, h: 600 };
+        const targetSize = defaultSizes[type] || { w: 900, h: 600 };
+        const width = Math.max(380, Math.min(targetSize.w, availableWidth - 40));
+        const height = Math.max(280, Math.min(targetSize.h, availableHeight - 20));
 
-        let x = (window.innerWidth - width) / 2;
-        let y = (window.innerHeight - height) / 2;
+        let x = Math.max(20, (availableWidth - width) / 2);
+        let y = Math.max(menuBarHeight + 10, menuBarHeight + (availableHeight - height) / 2);
 
         if (state.windows.length > 0) {
             // Cascade from the most recently focused window or last created
             const lastWin = state.windows[state.windows.length - 1];
-            x = (lastWin.x || x) + 30;
-            y = (lastWin.y || y) + 30;
+            x = (lastWin.x !== undefined ? lastWin.x : x) + 30;
+            y = (lastWin.y !== undefined ? lastWin.y : y) + 30;
+
+            // Clamp position so title bar stays reachable and window stays inside desktop bounds
+            const maxX = Math.max(20, availableWidth - width - 20);
+            const maxY = Math.max(menuBarHeight + 10, window.innerHeight - dockHeight - height - 10);
+
+            if (x > maxX) x = Math.max(20, (x % maxX) + 40);
+            if (y > maxY) y = Math.max(menuBarHeight + 10, Math.min(y, maxY));
         }
 
         const newWindow: WindowInstance = {
@@ -148,10 +182,35 @@ export const useOSStore = create<WindowState>((set) => ({
     updateWindowSize: (id, width, height) => set((state) => ({
         windows: state.windows.map(w => w.id === id ? { ...w, width, height } : w)
     })),
+    clampWindowsToViewport: () => set((state) => {
+        const { menuBarHeight, dockHeight, availableWidth, availableHeight } = getWorkspaceBounds();
+        return {
+            windows: state.windows.map(win => {
+                if (win.isMaximized) return win;
+                const winW = win.width || 800;
+                const winH = win.height || 550;
+                const winX = win.x !== undefined ? win.x : 20;
+                const winY = win.y !== undefined ? win.y : 50;
+
+                const width = Math.max(380, Math.min(winW, availableWidth - 40));
+                const height = Math.max(280, Math.min(winH, availableHeight - 20));
+                const maxX = Math.max(10, availableWidth - width - 10);
+                const maxY = Math.max(menuBarHeight + 5, window.innerHeight - dockHeight - height - 10);
+                const x = Math.min(Math.max(10, winX), maxX);
+                const y = Math.min(Math.max(menuBarHeight + 5, winY), maxY);
+                return { ...win, width, height, x, y };
+            })
+        };
+    }),
     setActiveApp: (label) => set({ activeApp: label }),
     toggleLaunchpad: (isOpen) => set((state) => ({
         isLaunchpadOpen: isOpen !== undefined ? isOpen : !state.isLaunchpadOpen
     })),
-    setTheme: (theme) => set({ theme }),
+    setTheme: (theme) => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('os_theme', theme);
+        }
+        set({ theme });
+    },
     setWallpaper: (wallpaper) => set({ wallpaper }),
 }));

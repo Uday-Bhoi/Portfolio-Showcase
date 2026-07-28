@@ -10,7 +10,12 @@ import AudioEngine from './core/AudioEngine';
 const App: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isBooting, setIsBooting] = useState(true);
-  const { openWindow } = useOSStore();
+  const { openWindow, theme } = useOSStore();
+
+  useEffect(() => {
+    document.documentElement.className = `theme-${theme}`;
+    document.body.className = `theme-${theme}`;
+  }, [theme]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,26 +25,25 @@ const App: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (isBooting) {
-    return (
-      <BootScreen
-        preloadImage={macosWallpaper}
-        onBootComplete={() => {
-          setIsBooting(false);
-          // Automatically open portfolio on startup for desktop
-          if (window.innerWidth > 768) {
-            setTimeout(() => {
-              openWindow('portfolio', 'meetuday.exe');
-            }, 500);
-          }
-        }}
-      />
-    );
-  }
-
   return (
     <>
-      {isMobile ? <MobileUI /> : <DesktopUI />}
+      <div style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.6s ease-in-out', width: '100%', height: '100%' }}>
+        {isMobile ? <MobileUI /> : <DesktopUI />}
+      </div>
+      {isBooting && (
+        <BootScreen
+          preloadImage={macosWallpaper}
+          onBootComplete={() => {
+            setIsBooting(false);
+            // Automatically open portfolio on startup for desktop
+            if (window.innerWidth > 768) {
+              setTimeout(() => {
+                openWindow('portfolio', 'meetuday.exe');
+              }, 300);
+            }
+          }}
+        />
+      )}
       <AudioEngine />
     </>
   );

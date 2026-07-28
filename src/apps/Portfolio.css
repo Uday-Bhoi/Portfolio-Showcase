@@ -778,7 +778,7 @@
 
     .sidebar-nav button.active {
         background: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
         color: #000000;
         font-weight: 600;
     }
@@ -890,4 +890,288 @@
     .center-content {
         padding: 0 15px;
     }
+}
+
+/* --- Global Dark Mode Overrides for Portfolio --- */
+.theme-dark .portfolio-v2-container {
+    background-color: #1c1c1e;
+    background-image: none;
+    color: #e5e5e7;
+}
+
+.theme-dark .hero-name {
+    color: #ffffff;
+}
+
+.theme-dark .hero-role {
+    color: #a1a1a6;
+}
+
+.theme-dark .hero-nav button {
+    color: #6e9dff;
+}
+
+/* Sidebar */
+.theme-dark .portfolio-sidebar {
+    background: rgba(28, 28, 30, 0.6);
+    border-right-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-dark .sidebar-header h1 {
+    color: #ffffff;
+}
+
+.theme-dark .sidebar-header p {
+    color: #a1a1a6;
+}
+
+.theme-dark .sidebar-nav button {
+    color: #6e9dff;
+}
+
+.theme-dark .sidebar-nav button.active {
+    color: #ffffff;
+}
+
+.theme-dark .sidebar-nav button:hover {
+    color: #ffffff;
+}
+
+.theme-dark .sidebar-footer {
+    color: #8e8e93;
+}
+
+/* Content Area */
+.theme-dark .app-main-content {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.theme-dark .page-main-heading {
+    color: #ffffff;
+}
+
+.theme-dark .section-intro-desc {
+    color: #a1a1a6;
+}
+
+.theme-dark .sub-greeting {
+    color: #c7c7cc;
+}
+
+.theme-dark .intro-text,
+.theme-dark .about-page p,
+.theme-dark .about-me-section p,
+.theme-dark .hobbies-section p {
+    color: #c7c7cc;
+}
+
+.theme-dark .section-sub-title {
+    color: #ffffff;
+}
+
+/* Timeline */
+.theme-dark .timeline-header h3 {
+    color: #ffffff;
+}
+
+.theme-dark .timeline-header span {
+    color: #8e8e93;
+}
+
+.theme-dark .timeline-sub {
+    color: #6e9dff;
+}
+
+.theme-dark .timeline-desc,
+.theme-dark .timeline-meta {
+    color: #c7c7cc;
+}
+
+.theme-dark .timeline-item {
+    border-left-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Project Cards */
+.theme-dark .category-title {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .project-card-premium {
+    background: rgba(44, 44, 46, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+}
+
+.theme-dark .project-card-premium:hover {
+    background: rgba(58, 58, 60, 0.85);
+    border-color: rgba(100, 160, 255, 0.3);
+}
+
+.theme-dark .project-card-title {
+    color: #ffffff;
+}
+
+.theme-dark .project-card-desc {
+    color: #a1a1a6;
+}
+
+.theme-dark .project-tag-item {
+    background: rgba(255, 255, 255, 0.08);
+    color: #c7c7cc;
+}
+
+.theme-dark .project-btn-premium.github {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5e5e7;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-dark .project-btn-premium.github:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* Skills */
+.theme-dark .skill-category-v2,
+.theme-dark .skill-category {
+    color: #e5e5e7;
+}
+
+.theme-dark .skill-category h3 {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .skill-tags span {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #c7c7cc;
+}
+
+/* Hobby Cards & Qualification Cards */
+.theme-dark .hobby-card,
+.theme-dark .qualification-card {
+    background: rgba(44, 44, 46, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e5e5e7;
+}
+
+.theme-dark .hobby-card h3,
+.theme-dark .qualification-card h3 {
+    color: #ffffff;
+}
+
+.theme-dark .hobby-card p,
+.theme-dark .qualification-card p {
+    color: #c7c7cc;
+}
+
+/* Highlight box */
+.theme-dark .highlight-box {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Certification */
+.theme-dark .cert-meta {
+    color: #8e8e93;
+}
+
+/* Contact Section */
+.theme-dark .contact-hero h1 {
+    color: #ffffff;
+}
+
+.theme-dark .contact-subtitle {
+    color: #a1a1a6;
+}
+
+.theme-dark .contact-header-wrap {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .form-group label {
+    color: #c7c7cc;
+}
+
+.theme-dark .form-group input,
+.theme-dark .form-group textarea {
+    background: rgba(44, 44, 46, 0.9);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.theme-dark .form-group input::placeholder,
+.theme-dark .form-group textarea::placeholder {
+    color: #636366;
+}
+
+.theme-dark .social-icon-link {
+    color: #c7c7cc;
+}
+
+.theme-dark .social-icon-link:hover {
+    color: #6e9dff;
+}
+
+.theme-dark .info-item .label {
+    color: #8e8e93;
+}
+
+.theme-dark .info-item p,
+.theme-dark .info-item a {
+    color: #e5e5e7;
+}
+
+/* Resume Download */
+.theme-dark .resume-download-section {
+    background: rgba(44, 44, 46, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .resume-download-section:hover {
+    background: rgba(58, 58, 60, 0.85);
+}
+
+.theme-dark .resume-icon-wrapper {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-dark .resume-download-title {
+    color: #ffffff;
+}
+
+/* Resume Notice */
+.theme-dark .resume-notice {
+    background: rgba(44, 44, 46, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Link Action */
+.theme-dark .link-action {
+    color: #6e9dff;
+}
+
+/* Content Divider */
+.theme-dark .content-divider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Hobbies portrait */
+.theme-dark .hobbies-portrait {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Scrollbar */
+.theme-dark .app-main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.theme-dark .app-main-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.theme-dark .app-main-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
 }

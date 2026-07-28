@@ -19,8 +19,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 60px;
+  justify-content: space-between;
+  padding-top: 40px;
+  padding-bottom: 115px;
+  width: 100%;
+  box-sizing: border-box;
   transition: opacity 0.3s ease-out;
 }
 
@@ -52,14 +55,15 @@
 
 .lock-footer-ios {
   position: absolute;
-  bottom: calc(env(safe-area-inset-bottom) + 72px);
+  bottom: calc(env(safe-area-inset-bottom) + 54px);
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 46px;
   pointer-events: auto;
   transition: opacity 0.3s ease-out;
+  z-index: 100;
 }
 
 .footer-action-btn {
@@ -73,13 +77,106 @@
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  transition: transform 0.15s, background 0.15s;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.2, 1), background 0.18s;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .footer-action-btn:active {
-    transform: scale(0.9);
-    background: rgba(0, 0, 0, 0.55);
+  transform: scale(0.88);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.footer-action-btn.active {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* Flashlight Beam Simulation */
+.flashlight-beam {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: radial-gradient(circle at 15% 90%, rgba(255, 255, 224, 0.25) 0%, rgba(255, 255, 224, 0) 70%);
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: screen;
+}
+
+/* Camera Simulation Styles */
+.camera-shutter-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  z-index: 1000;
+  animation: shutterFlash 0.35s ease-out forwards;
+}
+
+@keyframes shutterFlash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.camera-viewfinder-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 20px) 20px;
+  animation: fadeInOverlay 0.2s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.viewfinder-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.viewfinder-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-bracket {
+  width: 80px;
+  height: 80px;
+  border: 1px solid rgba(255, 223, 0, 0.8);
+  border-radius: 4px;
+  position: relative;
+  animation: focusPulse 1s infinite alternate;
+}
+
+@keyframes focusPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+.viewfinder-footer {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.mode-active {
+  color: #ffdf00;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .home-bar-ios {
@@ -93,16 +190,17 @@
   gap: 8px;
   width: 100%;
   cursor: pointer;
+  z-index: 100;
 }
 
 .home-bar-ios span {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    opacity: 0.7;
-    text-transform: uppercase;
-    animation: textPulse 2.5s infinite ease-in-out;
-    margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  opacity: 0.7;
+  text-transform: uppercase;
+  animation: textPulse 2.5s infinite ease-in-out;
+  margin-bottom: 6px;
 }
 
 /* Single home indicator pill — sits below the swipe text */
@@ -114,18 +212,80 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-@keyframes barSlideHint {
-  0%, 100% { transform: translateY(0); opacity: 0.8; }
-  50% { transform: translateY(-4px); opacity: 1; }
-}
-
 @keyframes textPulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.95; }
 }
 
 @media (max-width: 400px) {
-    .time-display-ios {
-        font-size: 4.8rem;
-    }
+  .time-display-ios {
+    font-size: 4.8rem;
+  }
 }
+
+/* iOS Lock Screen Notification Card */
+.lockscreen-notification-card {
+  width: 95%;
+  max-width: 440px;
+  margin: auto auto 10px auto;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(35px) saturate(210%);
+  -webkit-backdrop-filter: blur(35px) saturate(210%);
+  border-radius: 22px;
+  padding: 14px 18px;
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.lock-notif-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lock-notif-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #007aff, #0051a8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
+}
+
+.lock-notif-app {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.lock-notif-time {
+  font-size: 11px;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.lock-notif-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 3px 0;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.lock-notif-desc {
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+}
+

@@ -61,4 +61,4 @@ const CalendarWidget: React.FC = () => {
     );
 };
 
-export default CalendarWidget;
+export default React.memo(CalendarWidget);

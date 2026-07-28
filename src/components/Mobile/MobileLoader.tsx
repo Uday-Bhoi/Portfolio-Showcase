@@ -1,30 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { Icons } from '../../assets/icons';
 import './MobileLoader.css';
 
-const GREETINGS = ['Namaste', 'Hello', 'Hola', 'Bonjour', 'Ciao', 'Konnichiwa'];
-
 const MobileLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
-  const [index, setIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % GREETINGS.length);
-    }, 400);
+    // Animate progress bar from 0 to 100
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        // Random incremental steps to feel realistic
+        const increment = Math.floor(Math.random() * 15) + 5;
+        return Math.min(prev + increment, 100);
+      });
+    }, 150);
 
-    const finishTimer = setTimeout(() => {
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (progress === 100) {
+      const timer = setTimeout(() => {
         onComplete();
-    }, 2500);
-
-    return () => {
-        clearInterval(timer);
-        clearTimeout(finishTimer);
-    };
-  }, [onComplete]);
+      }, 500); // Hold for a split second after completion
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onComplete]);
 
   return (
     <div className="mobile-loader">
-      <div className="greeting-text animate-greeting">
-        {GREETINGS[index]}
+      <div className="boot-content">
+        <img 
+          src={Icons.apple} 
+          alt="Apple Logo" 
+          className="apple-logo-img" 
+        />
+        <div className="ios-progress-bar-container">
+          <div className="ios-progress-bar-fill" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
     </div>
   );

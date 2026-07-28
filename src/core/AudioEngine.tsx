@@ -30,12 +30,12 @@ const AudioEngine: React.FC = () => {
         }
     }, [currentTrackId, isShuffle, playTrack, tracks]);
 
-    // Initial autoplay setup: Listen for first interaction
+    // TEMPORARILY DISABLED AUTOMATIC BACKGROUND MUSIC AUTO-PLAY
+    /*
     useEffect(() => {
         const handleInteraction = () => {
             if (!hasInteracted) {
                 setHasInteracted(true);
-                // If no track is set, pick one and start
                 if (!currentTrackId && tracks.length > 0) {
                     const index = isShuffle ? Math.floor(Math.random() * tracks.length) : 0;
                     playTrack(tracks[index].id);
@@ -55,6 +55,7 @@ const AudioEngine: React.FC = () => {
             window.removeEventListener('touchstart', handleInteraction);
         };
     }, [hasInteracted, currentTrackId, tracks, isShuffle, playTrack, togglePlay]);
+    */
 
     // Sync volume
     useEffect(() => {
@@ -65,9 +66,12 @@ const AudioEngine: React.FC = () => {
 
     // Handle play/pause
     useEffect(() => {
-        if (!audioRef.current || !hasInteracted) return;
+        if (!audioRef.current) return;
 
         if (isPlaying) {
+            if (!hasInteracted) {
+                queueMicrotask(() => setHasInteracted(true));
+            }
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => {
@@ -83,18 +87,15 @@ const AudioEngine: React.FC = () => {
     // Handle track changes
     useEffect(() => {
         if (audioRef.current && currentTrack) {
-            // Only update src if it has actually changed, preventing reload on play/pause
             const currentSrc = audioRef.current.src;
-            // Get absolute URL of currentTrack.src to compare properly if needed,
-            // or just rely on endsWith for relative paths
             if (!currentSrc || !currentSrc.includes(currentTrack.src)) {
                 audioRef.current.src = currentTrack.src;
-                if (isPlaying && hasInteracted) {
+                if (isPlaying) {
                     audioRef.current.play().catch(() => togglePlay(false));
                 }
             }
         }
-    }, [currentTrackId, currentTrack, isPlaying, hasInteracted, togglePlay]);
+    }, [currentTrackId, currentTrack, isPlaying, togglePlay]);
 
     // Update progress state
     const onTimeUpdate = () => {

@@ -150,7 +150,8 @@ const DesktopUI: React.FC = () => {
     openWindow,
     activeApp,
     toggleLaunchpad,
-    theme
+    theme,
+    clampWindowsToViewport
   } = useOSStore();
 
   const [time, setTime] = useState(new Date());
@@ -161,6 +162,14 @@ const DesktopUI: React.FC = () => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      clampWindowsToViewport();
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [clampWindowsToViewport]);
 
   const apps = useMemo(() => [
     { type: 'finder', name: 'Finder', icon: Icons.finder },
@@ -353,7 +362,7 @@ const DesktopUI: React.FC = () => {
 
       {/* 2. Desktop Workspace Content - Widgets removed */}
       <main className="desktop-content">
-        <div className={`widgets-layer ${isAnyWindowMaximized ? 'behind-windows' : ''}`}>
+        <div className="widgets-layer">
           <MusicWidget />
           <CalendarWidget />
         </div>
